@@ -39,7 +39,7 @@ const LandingPage = () => {
       <div className="center-content">
         <div className="image-container">
           <div className="background-circle"></div>
-          <img src="./public/landingpage.svg" alt="Taylor Zhu" />
+          <img src="/public/landingpage.svg" alt="Taylor Zhu" />
         </div>
       </div>
 
