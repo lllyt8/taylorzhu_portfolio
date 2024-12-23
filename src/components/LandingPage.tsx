@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import '../styles/landing-page.css';
+import landingpage from "./assets/landingpage.svg";
 
 const pageVariants = {
   initial: {
@@ -39,7 +40,7 @@ const LandingPage = () => {
       <div className="center-content">
         <div className="image-container">
           <div className="background-circle"></div>
-          <img src="/public/landingpage.svg" alt="Taylor Zhu" />
+          <img src={landingpage} alt="Taylor Zhu" />
         </div>
       </div>
 
