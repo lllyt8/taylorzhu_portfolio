@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-interface Props {
+interface MessageInputProps {
   onSend: (content: string) => void;
 }
 
-const MessageInput: React.FC<Props> = ({ onSend }) => {
+const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
   const [input, setInput] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
-      onSend(input.trim());
+      onSend(input);
       setInput('');
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
     }
   };
 
@@ -21,9 +28,10 @@ const MessageInput: React.FC<Props> = ({ onSend }) => {
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder="输入消息..."
+        onKeyPress={handleKeyPress}
+        placeholder="Type your message..."
       />
-      <button type="submit">发送</button>
+      <button type="submit">Send</button>
     </form>
   );
 };
