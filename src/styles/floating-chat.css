@@ -1,0 +1,139 @@
+.floating-chat-container {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+
+.floating-chat-window {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 380px;
+  height: 600px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #4CAF50;
+  color: white;
+  font-weight: 500;
+}
+
+.chat-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.chat-controls button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.chat-controls button:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.chat-window-container {
+  flex: 1;
+  overflow: hidden;
+}
+
+.chat-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+.chat-toggle-button:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.chat-toggle-button.active {
+  background: #388E3C;
+}
+
+.chat-icon {
+  font-size: 24px;
+}
+
+.chat-label {
+  font-weight: 500;
+}
+
+@media (max-width: 480px) {
+  .floating-chat-window {
+    width: calc(100vw - 40px);
+    right: -20px;
+  }
+
+  .chat-toggle-button .chat-label {
+    display: none;
+  }
+
+  .chat-toggle-button {
+    padding: 12px;
+    border-radius: 50%;
+  }
+}
+.chat-window-container {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.floating-chat-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 确保 ChatWindow 内部样式正确 */
+.floating-chat-content .chat-window {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.floating-chat-content .message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.floating-chat-content .message-input {
+  padding: 20px;
+  border-top: 1px solid #eee;
+  background: white;
+}

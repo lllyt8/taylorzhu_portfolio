@@ -1,32 +1,22 @@
 import { useState } from 'react';
 import Sidebar from './components/Sidebar/Sidebar';
-import ChatWindow from './components/Chat/ChatWindow';
+import FloatingChat from './components/Chat/FloatingChat';
 import LandingPage from './components/LandingPage';
 import { PageType } from './types/navigation';
 import './styles/sidebar.css';
 import './styles/landing-page.css';
+import './styles/floating-chat.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
+  const [isChatVisible, setIsChatVisible] = useState(false);
 
+  // 移除 chat 从导航选项，因为它现在会通过浮动窗口显示
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
         return <LandingPage />;
-      case 'chat':
-        return (
-          <div className="chat-container">
-            <button 
-              className="close-chat" 
-              onClick={() => setCurrentPage('home')}
-              type="button"
-              aria-label="Close chat"
-            >
-              ×
-            </button>
-            <ChatWindow />
-          </div>
-        );
+      // 移除 chat case，因为它现在由 FloatingChat 处理
       default:
         return <div className="coming-soon">Coming Soon!</div>;
     }
@@ -34,10 +24,17 @@ function App() {
 
   return (
     <div className="app-container">
-      <Sidebar onNavigate={setCurrentPage} currentPage={currentPage} />
+      <Sidebar 
+        onNavigate={setCurrentPage} 
+        currentPage={currentPage} 
+      />
       <div className="content">
         {renderPage()}
       </div>
+      <FloatingChat 
+        isVisible={isChatVisible}
+        setIsVisible={setIsChatVisible}
+      />
     </div>
   );
 }
