@@ -2,11 +2,13 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   /* gap: 2rem; */
-  padding: 4rem;
+  padding: 2rem;
   height: 100%;
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
+  min-height: calc(100vh - 80px); /* 减去导航栏高度 */
+  padding: 0 4rem;  /* 修改padding，只保留左右间距 */
 }
 
 .left-content {
@@ -14,7 +16,7 @@
 }
 
 .left-content h1 {
-  font-size: 3.5rem;
+  font-size: 2.8rem;
   line-height: 1.2;
   margin-bottom: 1rem;
   font-weight: 700;
@@ -79,15 +81,15 @@
 
 .image-container {
   position: relative;
-  width: 500px;
-  height: 600px;
+  width: 400px;
+  height: 500px;
   z-index: 1;
 }
 
 .background-circle {
   position: absolute;
-  width: 400px;
-  height: 400px;
+  width: 320px;
+  height: 320px;
   background-color: #4CAF50;
   border-radius: 50%;
   opacity: 0.8;
