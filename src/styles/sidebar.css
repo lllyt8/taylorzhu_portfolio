@@ -276,3 +276,75 @@
     padding: 15px;
   }
 }
+
+/* 在现有的 CSS 基础上添加以下内容 */
+
+/* 动画相关样式 */
+.nav-item {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu {
+  transform-origin: top right;
+  will-change: transform, opacity;
+}
+
+/* 触摸手势相关样式 */
+.nav-header {
+  touch-action: pan-y pinch-zoom;
+}
+
+/* 动画过渡效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* 活跃状态动画 */
+.nav-item.active::after {
+  animation: expand 0.3s ease forwards;
+}
+
+@keyframes expand {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* 优化移动端触摸体验 */
+@media (max-width: 767px) {
+  .mobile-menu {
+    touch-action: none;
+    overflow-y: auto;
+  }
+
+  /* 隐藏滚动条同时保持滚动功能 */
+  .mobile-menu {
+    overflow-y: auto;
+    padding-right: 0; /* 补偿滚动条宽度 */
+  }
+  
+  /* Webkit 浏览器 (Chrome, Safari) */
+  .mobile-menu::-webkit-scrollbar {
+    display: none;
+  }
+}
