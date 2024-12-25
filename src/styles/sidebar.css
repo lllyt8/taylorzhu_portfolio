@@ -6,35 +6,53 @@
 
 .content {
   flex: 1;
-  padding-top: 80px; /* 导航栏的高度 */
+  padding-top: 80px;
 }
 
+/* 导航栏基础样式 */
 .nav-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  width: 90%;
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 px;
   background: #fff;
   z-index: 1000;
+  padding: 0 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
+/* Logo样式 */
 .logo {
   font-size: 24px;
   font-weight: bold;
   color: #333;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
 }
 
+.logo:hover {
+  color: #4CAF50;
+}
+
+/* 导航菜单样式 */
 .nav-menu {
   display: flex;
   gap: 80px;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
+/* 导航项样式 */
 .nav-item {
   border: none;
   background: none;
@@ -43,6 +61,7 @@
   cursor: pointer;
   padding: 8px 0;
   position: relative;
+  transition: color 0.3s ease;
 }
 
 .nav-item::after {
@@ -57,27 +76,105 @@
   transition: width 0.3s ease;
 }
 
+.nav-item:hover {
+  color: #4CAF50;
+}
+
 .nav-item:hover::after {
   width: 100%;
 }
 
+/* 活跃导航项样式 */
+.nav-item.active {
+  color: #4CAF50;
+}
+
+.nav-item.active::after {
+  width: 100%;
+}
+
+/* 汉堡菜单按钮样式 */
 .menu-toggle {
+  display: none;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: #4CAF50;
+  padding: 8px;
   border: none;
+  background: transparent;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
-.menu-toggle:hover {
-  transform: scale(1.1);
+/* 汉堡菜单线条 */
+.menu-line {
+  width: 24px;
+  height: 2px;
+  background-color: #333;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
+.menu-toggle .menu-line + .menu-line {
+  margin-top: 6px;
+}
+
+/* 汉堡菜单打开状态动画 */
+.menu-toggle.open .menu-line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.open .menu-line:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open .menu-line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* 汉堡菜单悬停效果 */
+.menu-toggle:hover .menu-line {
+  background-color: #4CAF50;
+}
+
+/* 移动端下拉菜单 */
+.mobile-menu {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  animation: slideDown 0.3s ease;
+  z-index: 1;
+}
+
+.mobile-menu .nav-item {
+  width: 100%;
+  text-align: left;
+  padding: 12px 20px;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu .nav-item:hover {
+  background: rgba(76, 175, 80, 0.1);
+  padding-left: 25px;
+}
+
+/* 下拉菜单动画 */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 聊天相关样式 */
 .chat-container {
   position: relative;
   height: 100%;
@@ -98,27 +195,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   z-index: 100;
 }
 
 .close-chat:hover {
   background: #e4e6eb;
   color: #333;
+  transform: rotate(90deg);
 }
 
-@media (max-width: 768px) {
-  .nav-menu {
-    display: none;
-  }
-  
-  .menu-toggle {
-    display: block;
-  }
+/* Coming Soon 页面样式 */
+.coming-soon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 2rem;
+  color: #4CAF50;
 }
 
-/* 保持之前的基础样式不变，在文件末尾添加媒体查询 */
-
+/* 响应式布局 */
 /* 大屏幕 (>=1200px) */
 @media (min-width: 1200px) {
   .nav-header {
@@ -133,69 +230,49 @@
   }
   
   .nav-menu {
-    gap: 20px;
+    gap: 40px;
   }
 }
 
 /* 手机屏幕 (<768px) */
 @media (max-width: 767px) {
+  .nav-header {
+    padding: 0 20px;
+  }
+
   .nav-menu {
-    display: none;  /* 隐藏普通导航菜单 */
+    display: none;
   }
 
   .menu-toggle {
-    display: block;  /* 显示菜单按钮 */
-  }
-
-  /* 添加移动端下拉菜单样式 */
-  .mobile-menu {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    justify-content: center;
   }
 
-  .mobile-menu .nav-item {
-    width: 100%;
-    text-align: left;
-    padding: 12px 20px;
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
 
-  .mobile-menu .nav-item:hover {
-    background: #f5f5f5;
+  .mobile-menu .nav-item::after {
+    display: none;
   }
 }
 
 /* 超小屏幕 (<480px) */
 @media (max-width: 479px) {
   .nav-header {
-    padding: 0 20px;
+    padding: 0 15px;
   }
 
   .logo {
     font-size: 20px;
   }
-}
 
-.nav-item.active {
-  color: #4CAF50;
-}
-
-.nav-item.active::after {
-  width: 100%;
-}
-
-.coming-soon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-size: 2rem;
-  color: #4CAF50;
+  .mobile-menu {
+    padding: 15px;
+  }
 }

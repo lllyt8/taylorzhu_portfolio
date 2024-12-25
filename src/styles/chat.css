@@ -129,9 +129,10 @@
 } */
 
 .clear-history-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: sticky; /* 改为粘性定位 */
+  top: 0;          /* 固定在顶部 */
+  float: right;    /* 靠右浮动 */
+  margin: 0 0 10px 10px; /* 添加边距 */
   width: 40px;
   height: 40px;
   border-radius: 50%;
