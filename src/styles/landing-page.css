@@ -169,14 +169,28 @@
 @media (max-width: 768px) {
   .landing-page {
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 2rem;
     text-align: center;
+    place-items: center;
+    padding: 2rem;
   }
 
-  .image-container {
+  .left-content {
+    padding-right: 0;
+    order: 2; /* 将文字内容放到第二位 */
+  }
+
+  .center-content {
+    order: 1; /* 将图片放到第一位 */
+    margin: 0 auto;
+  }
+
+  /* .image-container {
     width: 300px;
     height: 400px;
-    margin: 2rem auto;
-  }
+    margin: 0 auto;
+  } */
 
   .background-circle {
     width: 250px;
@@ -185,5 +199,117 @@
 
   .action-buttons {
     justify-content: center;
+  }
+
+  /* 调整聊天气泡的位置 */
+  .chat-bubble {
+    position: static; /* 取消绝对定位 */
+    margin-top: 20px; /* 添加上边距 */
+    margin-bottom: 20px;
+    /* 防止 Framer Motion 的动画影响位置 */
+    /* transform: none !important;  */
+  }
+
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* 添加更小屏幕的适配 */
+@media (max-width: 480px) {
+  .image-container {
+    width: 250px;
+    height: 350px;
+  }
+
+  .background-circle {
+    width: 200px;
+    height: 200px;
+  }
+
+  .left-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .left-content h2 {
+    font-size: 1.5rem;
+  }
+}
+
+.chat-bubble {
+  position: absolute;
+  top: 20px;
+  right: -100px;
+  background: #4CAF50;
+  padding: 15px 28px;
+  border-radius: 25px;
+  border: none;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+  cursor: pointer;
+  font-size: 17px;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.chat-bubble::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 12px 12px 12px 0;
+  border-color: transparent #4CAF50 transparent transparent;
+}
+
+.chat-bubble::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(255,255,255,0.1) 0%,
+    rgba(255,255,255,0.2) 50%,
+    rgba(255,255,255,0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.chat-bubble:hover::after {
+  opacity: 1;
+}
+
+/* 手机端样式调整 */
+@media (max-width: 768px) {
+  .chat-bubble {
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    padding: 10px 20px;
+    font-size: 14px; /* 减小字体大小 */
+    white-space: nowrap; /* 防止文字换行 */
+  }
+  
+  /* 调整气泡指向箭头的位置和大小 */
+  .chat-bubble::before {
+    left: -8px;
+    border-width: 8px 8px 8px 0;
+  }
+}
+
+/* 超小屏幕的额外调整 */
+@media (max-width: 480px) {
+  .chat-bubble {
+    right: -10px;
+    padding: 8px 16px;
   }
 }

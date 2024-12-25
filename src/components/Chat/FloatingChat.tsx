@@ -10,13 +10,13 @@ interface FloatingChatProps {
 const FloatingChat = ({ isVisible, setIsVisible }: FloatingChatProps) => {
   const [isMinimized, setIsMinimized] = useState(false);
 
-  const toggleChat = () => {
-    if (isMinimized) {
-      setIsMinimized(false);
-    } else {
-      setIsVisible(!isVisible);
-    }
-  };
+  // const toggleChat = () => {
+  //   if (isMinimized) {
+  //     setIsMinimized(false);
+  //   } else {
+  //     setIsVisible(!isVisible);
+  //   }
+  // };
 
   const minimizeChat = () => {
     setIsMinimized(true);
@@ -61,7 +61,7 @@ const FloatingChat = ({ isVisible, setIsVisible }: FloatingChatProps) => {
         )}
       </AnimatePresence>
 
-      <motion.button
+      {/* <motion.button
         className={`chat-toggle-button ${isVisible ? 'active' : ''}`}
         onClick={toggleChat}
         whileHover={{ scale: 1.05 }}
@@ -77,7 +77,7 @@ const FloatingChat = ({ isVisible, setIsVisible }: FloatingChatProps) => {
         ) : (
           <span className="chat-icon">×</span>
         )}
-      </motion.button>
+      </motion.button> */}
     </div>
   );
 };

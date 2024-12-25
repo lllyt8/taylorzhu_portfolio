@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Sidebar from './components/Sidebar/Sidebar';
-import FloatingChat from './components/Chat/FloatingChat';
 import LandingPage from './components/LandingPage';
+import FloatingChat from './components/Chat/FloatingChat';
 import { PageType } from './types/navigation';
 import './styles/sidebar.css';
 import './styles/landing-page.css';
@@ -9,13 +9,12 @@ import './styles/floating-chat.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
-  const [isChatVisible, setIsChatVisible] = useState(false);
+  const [showChat, setShowChat] = useState(false);
 
-  // 移除 chat 从导航选项，因为它现在会通过浮动窗口显示
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
-        return <LandingPage />;
+        return <LandingPage onOpenChat={() => setShowChat(true)} />;
       // 移除 chat case，因为它现在由 FloatingChat 处理
       default:
         return <div className="coming-soon">Coming Soon!</div>;
@@ -32,8 +31,8 @@ function App() {
         {renderPage()}
       </div>
       <FloatingChat 
-        isVisible={isChatVisible}
-        setIsVisible={setIsChatVisible}
+        isVisible={showChat}
+        setIsVisible={setShowChat}
       />
     </div>
   );

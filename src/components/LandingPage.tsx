@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion';
 import '../styles/landing-page.css';
 
+interface LandingPageProps {
+  onOpenChat: () => void;
+}
+
 const pageVariants = {
   initial: {
     opacity: 0,
@@ -16,7 +20,7 @@ const pageVariants = {
   }
 };
 
-const LandingPage = () => {
+const LandingPage = ({ onOpenChat }: LandingPageProps) => {
   return (
     <motion.div 
       className="landing-page"
@@ -40,6 +44,21 @@ const LandingPage = () => {
         <div className="image-container">
           <div className="background-circle"></div>
           <img src="/landingpage.gif" alt="Taylor Zhu" />
+          <motion.button 
+            className="chat-bubble"
+            onClick={onOpenChat}
+            whileHover={{ scale: 1.05 }}
+            animate={{
+              y: [0, -10, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            Chat with me ✨
+          </motion.button>
         </div>
       </div>
 
