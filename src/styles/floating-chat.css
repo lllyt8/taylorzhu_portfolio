@@ -5,15 +5,12 @@
   z-index: 1000;
 }
 
-/* 修改聊天窗口的样式 */
 .floating-chat-window {
-  position: fixed; /* 改为 fixed 定位 */
+  position: absolute;
   bottom: 80px;
-  right: 20px;
+  right: 0;
   width: 380px;
   height: 600px;
-  max-height: 80vh; /* 添加最大高度限制 */
-  max-width: 90vw; /* 添加最大宽度限制 */
   background: white;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.15);
@@ -21,7 +18,6 @@
   display: flex;
   flex-direction: column;
 }
-
 
 .chat-header {
   display: flex;
@@ -94,21 +90,10 @@
   font-weight: 500;
 }
 
-/* 更小屏幕的处理 */
-@media (max-height: 600px) {
-  .floating-chat-window {
-    height: 60vh; /* 更小的高度 */
-    bottom: 20vh; /* 调整底部距离 */
-  }
-}
-
 @media (max-width: 480px) {
   .floating-chat-window {
-    right: 50%; /* 居中显示 */
-    transform: translateX(50%); /* 居中显示 */
-    width: 95vw; /* 宽度占屏幕95% */
-    height: 70vh; /* 高度占屏幕70% */
-    bottom: 15vh; /* 距底部15% */
+    width: calc(100vw - 40px);
+    right: -20px;
   }
 
   .chat-toggle-button .chat-label {
