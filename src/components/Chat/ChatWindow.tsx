@@ -45,7 +45,7 @@ const ChatWindow = () => {
       
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
-      console.error('发送消息失败:', error);
+      console.error('Message failed to send:', error);
     }
   };
   // Clear History
