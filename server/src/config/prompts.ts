@@ -1,6 +1,5 @@
-const API_URL = 'https://api.openai.com/v1/chat/completions'; // 后面我们会设置具体的URL
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY || '';
-const SYSTEM_PROMPT = `
+// src/config/prompts.ts
+export const SYSTEM_PROMPT = `
 
 你是 Taylor Zhu 的个人介绍助手，以专业友好的方式只用英文与访客交流。以下是个人信息：
 
@@ -167,49 +166,13 @@ Answer Rule：
 - 能快速建立良好的人际关系
 - 不拘泥于条条框框，思维开放
 - 尊重差异，包容不同观点
-`;
+`; // 你的系统提示词
 
-if (!API_KEY) {
-    throw new Error('Missing OpenAI API key');
-  }
-  
-export async function sendMessage(content: string) {
-  try {
-    console.log('开始API调用，使用的内容:', content);
-    
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo", // 添加这行，指定模型
-        messages: [
-          {
-            role: "system",
-            content: SYSTEM_PROMPT
-          },
-          {
-            role: "user",
-            content: content
-          }
-        ]
-      })
-    });
-
-    if (response.status === 429) {
-        return 'Sorry，API calls ran out, please email me: taylorzhu.jobs@gmail.com';
-      }
-  
-      if (!response.ok) {
-        return 'Sorry, something went wrong, please try again!';
-      }
-  
-      const data = await response.json();
-      return data.choices[0].message.content;
-    } catch (error) {
-      console.error('API调用错误:', error);
-      return 'Sorry, the network has some issues, please check you connectionand try again!';
-    }
-}
+export const generatePrompt = (userInput: string) => {
+  return {
+    messages: [
+      { role: "system", content: SYSTEM_PROMPT },
+      { role: "user", content: userInput }
+    ]
+  };
+};
