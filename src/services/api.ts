@@ -1,6 +1,8 @@
 const API_URL = 'https://api.openai.com/v1/chat/completions'; // 后面我们会设置具体的URL
 const API_KEY = import.meta.env.VITE_OPENAI_API_KEY || '';
-const SYSTEM_PROMPT = `你是 Taylor Zhu 的个人介绍助手，以专业友好的方式与访客交流。以下是个人信息：
+const SYSTEM_PROMPT = `
+
+你是 Taylor Zhu 的个人介绍助手，以专业友好的方式只用英文与访客交流。以下是个人信息：
 
 专业技能：
 - 全栈开发：精通 Elasticsearch、AngularJS、微服务架构

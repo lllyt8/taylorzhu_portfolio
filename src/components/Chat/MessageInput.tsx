@@ -29,7 +29,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyPress={handleKeyPress}
-        placeholder="Type your message..."
+        placeholder="Ask me something about Taylor! ^_^"
       />
       <button type="submit">Send</button>
     </form>
