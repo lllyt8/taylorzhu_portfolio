@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
+import { PageType } from '../types/navigation';
 import '../styles/landing-page.css';
 
 interface LandingPageProps {
   onOpenChat: () => void;
+  onNavigate: (page: PageType) => void;
 }
 
 const pageVariants = {
@@ -20,7 +22,7 @@ const pageVariants = {
   }
 };
 
-const LandingPage = ({ onOpenChat }: LandingPageProps) => {
+const LandingPage = ({ onOpenChat, onNavigate }: LandingPageProps) => {
   return (
     <motion.div 
       className="landing-page"
@@ -35,15 +37,13 @@ const LandingPage = ({ onOpenChat }: LandingPageProps) => {
         <h2>Software Engineer & Researcher</h2>
         <p>Passionate about building high-performance, robust, and efficient software solutions.</p>
         <div className="action-buttons">
-          <a 
-            href="https://drive.google.com/file/d/1SxAX2_UBLj8LrOGrbLVRVlXneBB9oGOc/view?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none' }}  // 移除下划线
+          <button className="primary-btn">Download Resume</button>
+          <button 
+            className="secondary-btn" 
+            onClick={() => onNavigate('contact')}
           >
-            <button className="primary-btn">Download Resume</button>
-          </a>
-          <button className="secondary-btn">Contact Me</button>
+            Contact Me
+          </button>
         </div>
       </div>
 

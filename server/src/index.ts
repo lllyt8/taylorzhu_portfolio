@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import { limiter, validateRequest, errorHandler } from './middleware/auth';
 import { Server } from 'http';
 import chatRoutes from './routes/chatRoutes';
+import formRoutes from './routes/formRoutes';  // 新增这行
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(limiter);
 
 // 使用路由
 app.use('/api', chatRoutes);
+app.use('/api/form', formRoutes);  // 新增这行
 
 app.use(errorHandler);
 
