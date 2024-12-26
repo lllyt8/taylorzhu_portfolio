@@ -1,41 +1,68 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect, useRef } from 'react';
+import AutoResizeInput from './AutoResizeInput';
 
 interface MessageInputProps {
   onSend: (content: string) => void;
+  disabled?: boolean;
 }
 
-const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
+const MessageInput: React.FC<MessageInputProps> = ({ onSend, disabled }) => {
   const [input, setInput] = useState('');
+  const [isComposing, setIsComposing] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (input.trim()) {
+    if (input.trim() && !disabled && !isComposing) {
       onSend(input);
       setInput('');
     }
   };
 
-  // 移除 handleKeyPress，直接在表单提交时处理
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
+
+  // 输入法事件处理
+  const handleCompositionStart = () => setIsComposing(true);
+  const handleCompositionEnd = () => setIsComposing(false);
+
+  // 处理移动端点击
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.stopPropagation();
+  };
+
+  // 自动聚焦到输入框
+  useEffect(() => {
+    const input = formRef.current?.querySelector('textarea');
+    if (input && !disabled) {
+      input.focus();
+    }
+  }, [disabled]);
+
   return (
     <form 
+      ref={formRef}
       className="message-input" 
       onSubmit={handleSubmit}
-      // 添加移动端触摸事件处理
-      onTouchStart={(e) => e.stopPropagation()}
+      onTouchStart={handleTouchStart}
     >
-      <input
-        type="text"
+      <AutoResizeInput
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Ask me something about Taylor! ^_^"
-        // 添加移动端输入优化
-        inputMode="text"
-        autoComplete="off"
+        disabled={disabled}
+        onKeyPress={handleKeyPress}
+        onCompositionStart={handleCompositionStart}
+        onCompositionEnd={handleCompositionEnd}
       />
       <button 
         type="submit"
-        // 添加明确的类型
-        role="button"
+        disabled={disabled || !input.trim() || isComposing}
+        aria-label="Send message"
       >
         Send
       </button>

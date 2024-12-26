@@ -8,13 +8,17 @@
 .message-list {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
-  position: relative; /* 为悬浮按钮提供定位上下文 */
+  position: relative;
+  height: 100%;
+  scroll-behavior: smooth;
 }
 
-.message-time {
+.message-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 12px;
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .message {
@@ -22,6 +26,16 @@
   animation: fadeIn 0.3s ease;
   position: relative;
   font-size: 14px;
+  margin-bottom: 12px;
+  transition: transform 0.2s ease;
+}
+
+.message.visible {
+  transform: translateY(0);
+}
+
+.message.hidden {
+  transform: translateY(20px);
 }
 
 .message-user {
@@ -41,8 +55,28 @@
 }
 
 .message-user, .message-ai {
-  padding: 8px 12px;  /* 减小内边距，之前是12px 16px */
-  border-radius: 14px 14px 4px 14px;  /* 稍微减小圆角 */
+  padding: 8px 12px;
+  border-radius: 14px 14px 4px 14px;
+}
+
+.message-sending {
+  opacity: 0.7;
+}
+
+.message-error {
+  opacity: 0.8;
+}
+
+.message-time {
+  font-size: 12px;
+}
+
+.message-user .message-time {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.message-ai .message-time {
+  color: #666;
 }
 
 .message-input {
@@ -52,96 +86,127 @@
   gap: 10px;
   background: #fff;
   border-radius: 0 0 12px 12px;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
 }
 
-.message-input input {
+/* 新增的自动调整大小输入框样式 */
+.auto-resize-input {
   flex: 1;
-  padding: 12px 16px; /* 增大输入框的点击区域 */
+  min-height: 24px;
+  max-height: 150px;
+  padding: 12px 16px;
   border: 1px solid #ddd;
   border-radius: 24px;
-  font-size: 16px; /* 移动端合适的字体大小 */
-  -webkit-appearance: none; /* 移除 iOS 默认样式 */
+  font-size: 16px;
+  line-height: 1.5;
+  resize: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  -webkit-appearance: none;
+  overflow-y: auto;
+}
+
+.auto-resize-input:focus {
+  outline: none;
+  border-color: #0084ff;
+  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.2);
 }
 
 .message-input button {
-  padding: 12px 24px; /* 增大按钮的点击区域 */
-  min-width: 80px; /* 确保按钮有足够的宽度 */
+  padding: 12px 24px;
+  min-width: 80px;
   background-color: #0084ff;
   color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   font-size: 16px;
-  /* 移除点击高亮 */
-  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s ease;
+  align-self: flex-end;
 }
 
-.message-input input:focus {
-  outline: none;
-  border-color: #0084ff;
-  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.2);
-}
-
-.message-input button:hover {
+.message-input button:hover:not(:disabled) {
   background-color: #0073e6;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.message-input button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
-.loading {
+.retry-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #666;
+  border-radius: 50%;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.retry-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+.sending-indicator {
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.sending-indicator .material-icons {
+  font-size: 14px;
+  animation: rotate 2s linear infinite;
+}
+
+.typing {
+  position: relative;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 15px;
+  background: currentColor;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 1s infinite;
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
   gap: 4px;
-  padding: 12px 16px;
+  padding: 8px 12px;
   background: #f0f2f5;
   border-radius: 18px;
   width: fit-content;
+  margin-bottom: 8px;
 }
 
-.loading span {
-  width: 8px;
-  height: 8px;
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
   background: #90949c;
   border-radius: 50%;
   animation: bounce 1.4s infinite ease-in-out;
+  display: inline-block;
 }
 
-.loading span:nth-child(1) { animation-delay: -0.32s; }
-.loading span:nth-child(2) { animation-delay: -0.16s; }
-
-@keyframes bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
-}
-
-/* .chat-controls {
-  padding: 10px;
-}
-
-.clear-history {
-  
-  border: none;
-  border-radius: 4px;
-
-  color: #666;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s;
-} */
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
 
 .clear-history-button {
-  position: sticky; /* 改为粘性定位 */
-  top: 0;          /* 固定在顶部 */
-  float: right;    /* 靠右浮动 */
-  margin: 0 0 10px 10px; /* 添加边距 */
+  position: sticky;
+  top: 0;
+  float: right;
+  margin: 0 0 10px 10px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -178,16 +243,68 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 移动端适配 */
 @media (max-width: 768px) {
+  .chat-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message-list {
+    flex: 1;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .message-input {
     position: sticky;
     bottom: 0;
     padding: 8px;
-    z-index: 100;
+    position: -webkit-sticky;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
   }
 
-  .message-input input,
-  .message-input button {
-    font-size: 16px; /* 防止 iOS 自动缩放 */
+  .message {
+    max-width: 85%;
+  }
+
+  .auto-resize-input {
+    font-size: 16px; /* 防止iOS自动缩放 */
+  }
+}
+
+/* iOS Safari 特殊处理 */
+@supports (-webkit-touch-callout: none) {
+  .chat-window {
+    height: -webkit-fill-available;
   }
 }
