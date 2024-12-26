@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@react-spring/web": "^9.7.5",
+    "axios": "^1.7.9",
     "framer-motion": "^11.15.0",
     "fresh": "^0.5.2",
     "fs-extra": "^11.2.0",

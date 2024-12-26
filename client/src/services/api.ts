@@ -1,53 +1,106 @@
+// services/api.ts
+import axios, { AxiosInstance } from 'axios';
 import { ContactForm } from '../types/form';
 
-// 原有的聊天相关函数保持不变
-export const sendMessage = async (content: string) => {
+// API URLs
+const CHAT_API_URL = 'https://taylorzhu-portfolio-backend-0vl5.onrender.com/api/chat';
+const FORM_API_URL = 'http://localhost:3001/api/form/submit';
+
+// 创建 axios 实例
+const createAxiosInstance = (baseURL: string): AxiosInstance => {
+  return axios.create({
+    baseURL,
+    timeout: 15000, // 15秒超时
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+const chatInstance = createAxiosInstance(CHAT_API_URL);
+const formInstance = createAxiosInstance(FORM_API_URL);
+
+// 重试配置
+const MAX_RETRIES = 2;
+const RETRY_DELAY = 1000;
+
+// 通用重试函数
+const withRetry = async <T>(
+  operation: () => Promise<T>,
+  maxRetries: number = MAX_RETRIES,
+  delay: number = RETRY_DELAY
+): Promise<T> => {
+  let retries = 0;
+
+  const attempt = async (): Promise<T> => {
+    try {
+      return await operation();
+    } catch (error) {
+      if (retries < maxRetries) {
+        retries++;
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return attempt();
+      }
+      throw error;
+    }
+  };
+
+  return attempt();
+};
+
+// 发送消息
+export const sendMessage = async (content: string): Promise<string> => {
   try {
-    const response = await fetch('https://taylorzhu-portfolio-backend-0vl5.onrender.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    const response = await withRetry(() => 
+      chatInstance.post('', {
         message: content
       })
-    });
-    
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+    );
+
+    if (!response.data?.choices?.[0]?.message?.content) {
+      throw new Error('Invalid response format');
     }
-    
-    const data = await response.json();
-    return data.choices[0].message.content;
+
+    return response.data.choices[0].message.content;
   } catch (error) {
-    console.error('Error:', error);
-    throw error;
+    console.error('Error sending message:', error);
+    if (axios.isAxiosError(error)) {
+      if (error.code === 'ECONNABORTED') {
+        throw new Error('Request timed out. Please try again.');
+      }
+      if (error.response?.status === 429) {
+        throw new Error('Too many requests. Please try again later.');
+      }
+    }
+    throw new Error('Failed to send message. Please try again.');
   }
 };
 
-// 新增表单提交函数
-export const submitContactForm = async (formData: ContactForm) => {
+// 提交联系表单
+export const submitContactForm = async (formData: ContactForm): Promise<any> => {
   try {
-    const response = await fetch('http://localhost:3001/api/form/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to submit form');
+    const response = await withRetry(() => 
+      formInstance.post('', formData)
+    );
+
+    if (!response.data) {
+      throw new Error('Invalid response format');
     }
-    
-    return await response.json();
+
+    return response.data;
   } catch (error) {
     console.error('Error submitting form:', error);
-    throw error;
+    if (axios.isAxiosError(error)) {
+      if (error.code === 'ECONNABORTED') {
+        throw new Error('Request timed out. Please try again.');
+      }
+      if (error.response?.status === 429) {
+        throw new Error('Too many requests. Please try again later.');
+      }
+    }
+    throw new Error('Failed to submit form. Please try again.');
   }
 };
-
 // // client/src/services/api.ts
 // export const sendMessage = async (content: string) => {
 //   try {
