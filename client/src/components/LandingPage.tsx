@@ -37,7 +37,14 @@ const LandingPage = ({ onOpenChat, onNavigate }: LandingPageProps) => {
         <h2>Software Engineer & Researcher</h2>
         <p>Passionate about building high-performance, robust, and efficient software solutions.</p>
         <div className="action-buttons">
-          <button className="primary-btn">Download Resume</button>
+          <a 
+            href="https://drive.google.com/file/d/1SxAX2_UBLj8LrOGrbLVRVlXneBB9oGOc/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}  // 移除下划线
+          >
+            <button className="primary-btn">Download Resume</button>
+          </a>
           <button 
             className="secondary-btn" 
             onClick={() => onNavigate('contact')}
