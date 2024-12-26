@@ -56,30 +56,28 @@
 
 .message-input input {
   flex: 1;
-  padding: 12px 16px; /* 增大输入框的点击区域 */
+  padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 24px;
-  font-size: 16px; /* 移动端合适的字体大小 */
-  -webkit-appearance: none; /* 移除 iOS 默认样式 */
-}
-
-.message-input button {
-  padding: 12px 24px; /* 增大按钮的点击区域 */
-  min-width: 80px; /* 确保按钮有足够的宽度 */
-  background-color: #0084ff;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 16px;
-  /* 移除点击高亮 */
-  -webkit-tap-highlight-color: transparent;
+  font-size: 13px;
+  transition: all 0.2s;
 }
 
 .message-input input:focus {
   outline: none;
   border-color: #0084ff;
   box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.2);
+}
+
+.message-input button {
+  padding: 6px 16px;
+  background-color: #0084ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
 }
 
 .message-input button:hover {
@@ -176,18 +174,4 @@
 .clear-history-button:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-@media (max-width: 768px) {
-  .message-input {
-    position: sticky;
-    bottom: 0;
-    padding: 8px;
-    z-index: 100;
-  }
-
-  .message-input input,
-  .message-input button {
-    font-size: 16px; /* 防止 iOS 自动缩放 */
-  }
 }

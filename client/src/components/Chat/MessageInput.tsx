@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
 
 interface MessageInputProps {
   onSend: (content: string) => void;
@@ -7,7 +7,7 @@ interface MessageInputProps {
 const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
   const [input, setInput] = useState('');
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
       onSend(input);
@@ -15,30 +15,23 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
     }
   };
 
-  // 移除 handleKeyPress，直接在表单提交时处理
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
+
   return (
-    <form 
-      className="message-input" 
-      onSubmit={handleSubmit}
-      // 添加移动端触摸事件处理
-      onTouchStart={(e) => e.stopPropagation()}
-    >
+    <form className="message-input" onSubmit={handleSubmit}>
       <input
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        onKeyPress={handleKeyPress}
         placeholder="Ask me something about Taylor! ^_^"
-        // 添加移动端输入优化
-        inputMode="text"
-        autoComplete="off"
       />
-      <button 
-        type="submit"
-        // 添加明确的类型
-        role="button"
-      >
-        Send
-      </button>
+      <button type="submit">Send</button>
     </form>
   );
 };

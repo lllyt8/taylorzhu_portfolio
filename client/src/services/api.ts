@@ -1,15 +1,13 @@
-import { ContactForm } from '../types/form';
-
-// 原有的聊天相关函数保持不变
+// client/src/services/api.ts
 export const sendMessage = async (content: string) => {
   try {
-    const response = await fetch('https://taylorzhu-portfolio-backend-0vl5.onrender.com', {
+    const response = await fetch('http://localhost:3001/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        message: content
+        message: content  // 修改为符合新后端 API 的格式
       })
     });
     
@@ -24,54 +22,6 @@ export const sendMessage = async (content: string) => {
     throw error;
   }
 };
-
-// 新增表单提交函数
-export const submitContactForm = async (formData: ContactForm) => {
-  try {
-    const response = await fetch('http://localhost:3001/api/form/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to submit form');
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Error submitting form:', error);
-    throw error;
-  }
-};
-
-// // client/src/services/api.ts
-// export const sendMessage = async (content: string) => {
-//   try {
-//     const response = await fetch('http://localhost:3001/api/chat', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         message: content  // 修改为符合新后端 API 的格式
-//       })
-//     });
-    
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-    
-//     const data = await response.json();
-//     return data.choices[0].message.content;
-//   } catch (error) {
-//     console.error('Error:', error);
-//     throw error;
-//   }
-// };
 
 // const API_URL = 'https://api.openai.com/v1/chat/completions'; // 后面我们会设置具体的URL
 // const API_KEY = import.meta.env.VITE_OPENAI_API_KEY || '';

@@ -1,10 +1,8 @@
 import { motion } from 'framer-motion';
-import { PageType } from '../types/navigation';
 import '../styles/landing-page.css';
 
 interface LandingPageProps {
   onOpenChat: () => void;
-  onNavigate: (page: PageType) => void;
 }
 
 const pageVariants = {
@@ -22,7 +20,7 @@ const pageVariants = {
   }
 };
 
-const LandingPage = ({ onOpenChat, onNavigate }: LandingPageProps) => {
+const LandingPage = ({ onOpenChat }: LandingPageProps) => {
   return (
     <motion.div 
       className="landing-page"
@@ -45,12 +43,7 @@ const LandingPage = ({ onOpenChat, onNavigate }: LandingPageProps) => {
           >
             <button className="primary-btn">Download Resume</button>
           </a>
-          <button 
-            className="secondary-btn" 
-            onClick={() => onNavigate('contact')}
-          >
-            Contact Me
-          </button>
+          <button className="secondary-btn">Contact Me</button>
         </div>
       </div>
 

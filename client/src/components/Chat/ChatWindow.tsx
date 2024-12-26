@@ -21,43 +21,33 @@ const ChatWindow = () => {
   }, [messages]);
 
   // Handle Message
-  // ChatWindow.tsx 中的发送消息处理
-const handleSendMessage = async (content: string) => {
-  if (!content.trim()) return;
-  
-  const userMessage: Message = {
-    id: Date.now().toString(),
-    content,
-    sender: 'user',
-    timestamp: new Date()
-  };
-  
-  setMessages(prev => [...prev, userMessage]);
-  
-  try {
-    console.log('Sending message:', content); // 添加日志
-    const aiResponse = await sendMessage(content);
-    console.log('Received response:', aiResponse); // 添加日志
+  const handleSendMessage = async (content: string) => {
+    if (!content.trim()) return;
     
-    const aiMessage: Message = {
-      id: (Date.now() + 1).toString(),
-      content: aiResponse,
-      sender: 'ai',
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      content,
+      sender: 'user',
       timestamp: new Date()
     };
     
-    setMessages(prev => [...prev, aiMessage]);
-  } catch (error) {
-    console.error('Error in handleSendMessage:', error);
-    // 添加错误提示
-    setMessages(prev => [...prev, {
-      id: Date.now().toString(),
-      content: 'Sorry, there was an error sending your message. Please try again.',
-      sender: 'ai',
-      timestamp: new Date()
-    }]);
-  }
-};
+    setMessages(prev => [...prev, userMessage]);
+    
+    try {
+      const aiResponse = await sendMessage(content);
+      
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: aiResponse,
+        sender: 'ai',
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      console.error('Message failed to send:', error);
+    }
+  };
   // Clear History
   const clearHistory = () => {
     setMessages([]);
