@@ -80,7 +80,7 @@ const ContactPage = () => {
         >
             <div className="social-button-content">
             <img 
-                src="/public/logo/linkedin-icon.jpg" 
+                src="/logo/linkedin-icon.jpg" 
                 alt="LinkedIn"
                 className="social-icon"
             />
@@ -98,7 +98,7 @@ const ContactPage = () => {
         >
             <div className="social-button-content">
             <img 
-                src="/public/logo/github-icon.png" 
+                src="/logo/github-icon.png" 
                 alt="GitHub"
                 className="social-icon"
             />
@@ -116,7 +116,7 @@ const ContactPage = () => {
         >
             <div className="social-button-content">
             <img 
-                src="/public/profile_pic.jpg" 
+                src="/profile_pic.jpg" 
                 alt="Blog"
                 className="social-icon"
             />
