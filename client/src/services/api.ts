@@ -1,13 +1,16 @@
 // client/src/services/api.ts
 export const sendMessage = async (content: string) => {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+  console.log('Backend URL:', API_URL); // 用于调试
+
   try {
-    const response = await fetch('http://localhost:3001/api/chat', {
+    const response = await fetch(`${API_URL}/api/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        message: content  // 修改为符合新后端 API 的格式
+        message: content
       })
     });
     
@@ -22,6 +25,32 @@ export const sendMessage = async (content: string) => {
     throw error;
   }
 };
+
+
+// // client/src/services/api.ts
+// export const sendMessage = async (content: string) => {
+//   try {
+//     const response = await fetch('http://localhost:3001/api/chat', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({
+//         message: content  // 修改为符合新后端 API 的格式
+//       })
+//     });
+    
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+    
+//     const data = await response.json();
+//     return data.choices[0].message.content;
+//   } catch (error) {
+//     console.error('Error:', error);
+//     throw error;
+//   }
+// };
 
 // const API_URL = 'https://api.openai.com/v1/chat/completions'; // 后面我们会设置具体的URL
 // const API_KEY = import.meta.env.VITE_OPENAI_API_KEY || '';
