@@ -1,10 +1,9 @@
-// client/src/services/api.ts
-export const sendMessage = async (content: string) => {
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
-  console.log('Backend URL:', API_URL); // 用于调试
+import { ContactForm } from '../types/form';
 
+// 原有的聊天相关函数保持不变
+export const sendMessage = async (content: string) => {
   try {
-    const response = await fetch(`${API_URL}/api/chat`, {
+    const response = await fetch('http://localhost:3001/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -26,6 +25,28 @@ export const sendMessage = async (content: string) => {
   }
 };
 
+// 新增表单提交函数
+export const submitContactForm = async (formData: ContactForm) => {
+  try {
+    const response = await fetch('http://localhost:3001/api/form/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to submit form');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    throw error;
+  }
+};
 
 // // client/src/services/api.ts
 // export const sendMessage = async (content: string) => {
