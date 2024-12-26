@@ -3,7 +3,7 @@ import { ContactForm } from '../types/form';
 // 原有的聊天相关函数保持不变
 export const sendMessage = async (content: string) => {
   try {
-    const response = await fetch('http://localhost:3001/api/chat', {
+    const response = await fetch('https://taylorzhu-portfolio-backend-0vl5.onrender.com', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
