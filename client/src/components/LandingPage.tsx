@@ -38,7 +38,7 @@ const LandingPage = ({ onOpenChat, onNavigate }: LandingPageProps) => {
         <p>Passionate about building high-performance, robust, and efficient software solutions.</p>
         <div className="action-buttons">
           <a 
-            href="https://drive.google.com/file/d/1a_LLOI_Xcqxak0MyPECL53GZueWLHAWq/view?usp=sharing"
+            href="https://linkedin/in/taylorzhu"
             target="_blank"
             rel="noopener noreferrer"
             style={{ textDecoration: 'none' }}  // 移除下划线
