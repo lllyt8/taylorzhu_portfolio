@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import Sidebar from './components/Sidebar/Sidebar';
 import LandingPage from './components/LandingPage';
-import ContactPage from './components/ContactPage';  // 新增这行
+import AboutPage from './components/AboutPage';
+import ServicesPage from './components/ServicesPage';
+import ContactPage from './components/ContactPage';
 import FloatingChat from './components/Chat/FloatingChat';
 import { PageType } from './types/navigation';
 import './styles/sidebar.css';
 import './styles/landing-page.css';
 import './styles/floating-chat.css';
-import './styles/contact-page.css';  // 新增这行
+import './styles/contact-page.css';
+import './styles/about-page.css';
+import './styles/services-page.css'
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -22,6 +26,10 @@ function App() {
             onNavigate={setCurrentPage}
           />
         );
+      case 'about':
+        return <AboutPage />;
+      case 'services': 
+        return <ServicesPage />;
       case 'contact':
         return <ContactPage />;
       default:

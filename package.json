@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@react-spring/web": "^9.7.5",
+    "@types/three": "^0.172.0",
     "axios": "^1.7.9",
     "framer-motion": "^11.15.0",
     "fresh": "^0.5.2",
@@ -138,7 +139,9 @@
     "raw-body": "^2.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-use": "^17.6.0"
+    "react-use": "^17.6.0",
+    "three": "^0.172.0",
+    "three-stdlib": "^2.35.12"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

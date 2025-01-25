@@ -1,0 +1,118 @@
+.floating-nav {
+  position: fixed;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  background: rgba(40, 40, 40, 0.3);  /* 更透明的深色背景 */
+  padding: 8px 6px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.floating-nav .nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 90px;  /* 减小最小宽度 */
+}
+
+.floating-nav .nav-item {
+  all: unset;
+  display: block;
+  padding: 6px 12px;  /* 减小内边距 */
+  color: rgba(255, 255, 255, 0.8);  /* 浅色文字 */
+  cursor: pointer;
+  font-size: 12px;  /* 减小字体 */
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  text-align: left;
+  white-space: nowrap;
+  position: relative;
+  font-weight: 400;
+}
+
+.floating-nav .nav-item:hover {
+  background: rgba(76, 175, 80, 0.2);
+  color: #fff;
+}
+
+.floating-nav .nav-item.active {
+  color: #fff;
+  font-weight: 500;
+  background: rgba(76, 175, 80, 0.3);
+}
+
+.floating-nav .nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;  /* 减小指示条宽度 */
+  height: 12px;  /* 减小指示条高度 */
+  background: #4CAF50;
+  border-radius: 0 2px 2px 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .floating-nav {
+    right: 16px;
+    padding: 6px 4px;
+  }
+
+  .floating-nav .nav-item {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 768px) {
+  .floating-nav {
+    position: sticky;
+    top: 70px;
+    right: auto;
+    transform: none;
+    width: auto;
+    margin: 0 12px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+  }
+
+  .floating-nav .nav-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 6px 0;
+    gap: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    min-width: auto;
+  }
+
+  .floating-nav .nav-items::-webkit-scrollbar {
+    display: none;
+  }
+
+  .floating-nav .nav-item {
+    padding: 5px 10px;
+    font-size: 11px;
+    background: rgba(40, 40, 40, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .floating-nav .nav-item.active::before {
+    display: none;
+  }
+}
