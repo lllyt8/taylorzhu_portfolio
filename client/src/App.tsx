@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import LandingPage from './components/LandingPage';
 import AboutPage from './components/AboutPage';
 import ServicesPage from './components/ServicesPage';
+import ProjectsPage from './components/Projects/ProjectsPage';
 import ContactPage from './components/ContactPage';
 import FloatingChat from './components/Chat/FloatingChat';
 import { PageType } from './types/navigation';
@@ -30,6 +31,8 @@ function App() {
         return <AboutPage />;
       case 'services': 
         return <ServicesPage />;
+      case 'projects':
+          return <ProjectsPage />;
       case 'contact':
         return <ContactPage />;
       default:
