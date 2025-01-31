@@ -277,7 +277,7 @@
 
 .chat-bubble {
   position: absolute;
-  top: 20px;
+  top: 0px;
   right: -100px;
   background: #4CAF50;
   padding: 15px 28px;
