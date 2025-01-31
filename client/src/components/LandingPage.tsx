@@ -54,8 +54,8 @@ const LandingPage = ({ onOpenChat, onNavigate }: LandingPageProps) => {
 
       <div className="center-content">
         <div className="image-container">
-          <div className="background-circle"></div>
-          <img src="/landingpage.gif" alt="Taylor Zhu" />
+          {/* <div className="background-circle"></div> */}
+          <img src="/profile_pic.jpg" alt="Taylor Zhu" />
           <motion.button 
             className="chat-bubble"
             onClick={onOpenChat}
