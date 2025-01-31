@@ -107,7 +107,7 @@ const ContactPage = () => {
         </motion.a>
         
         <motion.a
-            href="https://taylorzhu-portfolio.vercel.app/"
+            href="https://devpost.com/tyzhu"
             target="_blank"
             rel="noopener noreferrer"
             className="social-button"
@@ -116,11 +116,11 @@ const ContactPage = () => {
         >
             <div className="social-button-content">
             <img 
-                src="/profile_pic.jpg" 
-                alt="Blog"
+                src="/logo/devpost-logo.png" 
+                alt="Hackathon"
                 className="social-icon"
             />
-            <span>Blog</span>
+            <span>Hackathon</span>
             </div>
         </motion.a>
     </div>
