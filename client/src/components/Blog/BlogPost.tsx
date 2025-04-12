@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { blogPosts } from '../../data/blog/blogData';
-import { blogCollections } from '../../data/blog/collectionsData';
+// import { blogCollections } from '../../data/blog/collectionsData';
 import { BlogPost as BlogPostType } from '../../types/blog';
 
 interface BlogPostProps {
