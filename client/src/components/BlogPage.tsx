@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import BlogList from './Blog/BlogList';
+import CollectionsList from './Blog/CollectionsList';
 import '../styles/blog-page.css';
 
 interface BlogPageProps {
@@ -40,6 +41,8 @@ const BlogPage = ({ onSelectPost, onSelectCollection }: BlogPageProps) => {
         activeCategory={activeCategory} 
         onSelectPost={onSelectPost}
       />
+
+      <CollectionsList onSelectCollection={onSelectCollection} />
     </div>
   );
 };

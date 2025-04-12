@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { blogCollections } from '../../data/blog/collectionsData';
-import { BlogCollection } from '../../types/blog';
+// import { BlogCollection } from '../../types/blog';
 
 interface CollectionsListProps {
   onSelectCollection: (collectionId: string) => void;
