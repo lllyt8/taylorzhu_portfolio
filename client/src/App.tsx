@@ -4,6 +4,9 @@ import LandingPage from './components/LandingPage';
 import AboutPage from './components/AboutPage';
 import ServicesPage from './components/ServicesPage';
 import ProjectsPage from './components/Projects/ProjectsPage';
+import BlogPage from './components/BlogPage';
+import BlogPost from './components/Blog/BlogPost';
+import CollectionView from './components/Blog/CollectionView';
 import ContactPage from './components/ContactPage';
 import FloatingChat from './components/Chat/FloatingChat';
 import { PageType } from './types/navigation';
@@ -17,6 +20,10 @@ import './styles/services-page.css'
 function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [showChat, setShowChat] = useState(false);
+  // 在状态声明部分添加
+  const [selectedBlogPostId, setSelectedBlogPostId] = useState<string | null>(null);
+  const [selectedCollectionId, setSelectedCollectionId] = useState<string | null>(null);
+  const [blogViewMode, setBlogViewMode] = useState<'list' | 'post' | 'collection'>('list');
 
   const renderPage = () => {
     switch (currentPage) {
@@ -33,6 +40,49 @@ function App() {
         return <ServicesPage />;
       case 'projects':
           return <ProjectsPage />;
+      case 'blog':
+        if (blogViewMode === 'post' && selectedBlogPostId) {
+          return (
+            <BlogPost 
+              postId={selectedBlogPostId} 
+              onBack={() => {
+                setBlogViewMode('list');
+                setSelectedBlogPostId(null);
+              }}
+              onViewCollection={(collectionId) => {
+                setBlogViewMode('collection');
+                setSelectedCollectionId(collectionId);
+              }}
+            />
+          );
+        } else if (blogViewMode === 'collection' && selectedCollectionId) {
+          return (
+            <CollectionView 
+              collectionId={selectedCollectionId}
+              onBack={() => {
+                setBlogViewMode('list');
+                setSelectedCollectionId(null);
+              }}
+              onSelectPost={(postId) => {
+                setBlogViewMode('post');
+                setSelectedBlogPostId(postId);
+              }}
+            />
+          );
+        } else {
+          return (
+            <BlogPage 
+              onSelectPost={(postId) => {
+                setBlogViewMode('post');
+                setSelectedBlogPostId(postId);
+              }}
+              onSelectCollection={(collectionId) => {
+                setBlogViewMode('collection');
+                setSelectedCollectionId(collectionId);
+              }}
+            />
+          );
+        }
       case 'contact':
         return <ContactPage />;
       default:

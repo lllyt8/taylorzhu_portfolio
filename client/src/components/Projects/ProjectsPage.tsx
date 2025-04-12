@@ -70,7 +70,12 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (id: number) => void }
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
         >
-          <button className="preview-btn">View More</button>
+          <button 
+            className="preview-btn"
+            aria-label={`View more details about ${project.title}`}
+          >
+            View More
+          </button>
         </motion.div>
       </div>
       <div className="project-info">
@@ -109,7 +114,13 @@ const ProjectModal: React.FC<{
       >
         <div className="modal-header">
           <h2>{project.title}</h2>
-          <button className="close-btn" onClick={onClose}>&times;</button>
+          <button 
+            className="close-btn" 
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            &times;
+          </button>
         </div>
 
         <div className="modal-body">
@@ -126,6 +137,7 @@ const ProjectModal: React.FC<{
                   key={index}
                   className={`carousel-dot ${currentImage === index ? 'active' : ''}`}
                   onClick={() => setCurrentImage(index)}
+                  aria-label={`View image ${index + 1} of ${project.images.length}`}
                 />
               ))}
             </div>
