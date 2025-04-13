@@ -1,3 +1,4 @@
+// client/src/App.tsx
 import { useState } from 'react';
 import Sidebar from './components/Sidebar/Sidebar';
 import LandingPage from './components/LandingPage';
@@ -9,6 +10,9 @@ import BlogPost from './components/Blog/BlogPost';
 import CollectionView from './components/Blog/CollectionView';
 import ContactPage from './components/ContactPage';
 import FloatingChat from './components/Chat/FloatingChat';
+import AdminLoginPage from './components/Admin/AdminLoginPage'; // 新增
+import AdminDashboard from './components/Admin/AdminDashboard'; // 新增
+import { AuthProvider } from './contexts/AuthContext'; // 新增
 import { PageType } from './types/navigation';
 import './styles/sidebar.css';
 import './styles/landing-page.css';
@@ -20,12 +24,18 @@ import './styles/services-page.css'
 function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [showChat, setShowChat] = useState(false);
-  // 在状态声明部分添加
   const [selectedBlogPostId, setSelectedBlogPostId] = useState<string | null>(null);
   const [selectedCollectionId, setSelectedCollectionId] = useState<string | null>(null);
   const [blogViewMode, setBlogViewMode] = useState<'list' | 'post' | 'collection'>('list');
+  const [isAdminView, setIsAdminView] = useState(false); // 新增
 
   const renderPage = () => {
+    // 管理员视图
+    if (isAdminView) {
+      return <AdminDashboard onExit={() => setIsAdminView(false)} />;
+    }
+
+    // 正常视图
     switch (currentPage) {
       case 'home':
         return (
@@ -39,7 +49,7 @@ function App() {
       case 'services': 
         return <ServicesPage />;
       case 'projects':
-          return <ProjectsPage />;
+        return <ProjectsPage />;
       case 'blog':
         if (blogViewMode === 'post' && selectedBlogPostId) {
           return (
@@ -85,25 +95,29 @@ function App() {
         }
       case 'contact':
         return <ContactPage />;
+      case 'admin': // 新增
+        return <AdminLoginPage onLoginSuccess={() => setIsAdminView(true)} />;
       default:
         return <div className="coming-soon">Coming Soon!</div>;
     }
   };
 
   return (
-    <div className="app-container">
-      <Sidebar 
-        onNavigate={setCurrentPage} 
-        currentPage={currentPage} 
-      />
-      <div className="content">
-        {renderPage()}
+    <AuthProvider>
+      <div className="app-container">
+        <Sidebar 
+          onNavigate={setCurrentPage} 
+          currentPage={currentPage} 
+        />
+        <div className="content">
+          {renderPage()}
+        </div>
+        <FloatingChat 
+          isVisible={showChat}
+          setIsVisible={setShowChat}
+        />
       </div>
-      <FloatingChat 
-        isVisible={showChat}
-        setIsVisible={setShowChat}
-      />
-    </div>
+    </AuthProvider>
   );
 }
 
