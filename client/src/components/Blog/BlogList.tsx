@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import BlogCard from './BlogCard';
-import { blogPosts } from '../../data/blog/blogData';
+import { getBlogPosts } from '../../services/api';
 import { BlogPost } from '../../types/blog';
 
 interface BlogListProps {
@@ -11,16 +11,42 @@ interface BlogListProps {
 
 const BlogList = ({ activeCategory, onSelectPost }: BlogListProps) => {
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
-    if (activeCategory === 'all') {
-      setFilteredPosts(blogPosts);
-    } else {
-      setFilteredPosts(blogPosts.filter(post => 
-        post.categories.includes(activeCategory)
-      ));
-    }
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const posts = await getBlogPosts();
+        
+        if (activeCategory === 'all') {
+          setFilteredPosts(posts);
+        } else {
+          setFilteredPosts(posts.filter((post: BlogPost) => 
+            post.categories.includes(activeCategory)
+          ));
+        }
+        
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching blog posts:', err);
+        setError('Failed to load blog posts. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchPosts();
   }, [activeCategory]);
+
+  if (loading) {
+    return <div className="loading">Loading posts...</div>;
+  }
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
 
   return (
     <div className="blog-grid">

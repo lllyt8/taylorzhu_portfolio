@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { blogCollections } from '../../data/blog/collectionsData';
-// import { BlogCollection } from '../../types/blog';
+import { getBlogCollections } from '../../services/api';
+import { BlogCollection } from '../../types/blog';
 
 interface CollectionsListProps {
   onSelectCollection: (collectionId: string) => void;
@@ -9,6 +9,35 @@ interface CollectionsListProps {
 
 const CollectionsList = ({ onSelectCollection }: CollectionsListProps) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [collections, setCollections] = useState<BlogCollection[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        setLoading(true);
+        const data = await getBlogCollections();
+        setCollections(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching collections:', err);
+        setError('Failed to load collections. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchCollections();
+  }, []);
+
+  if (loading) {
+    return <div className="loading">Loading collections...</div>;
+  }
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
 
   return (
     <div className="collections-container">
@@ -16,7 +45,7 @@ const CollectionsList = ({ onSelectCollection }: CollectionsListProps) => {
       <p className="collections-subtitle">Deep dives into specialized topics</p>
       
       <div className="collections-grid">
-        {blogCollections.map((collection, index) => (
+        {collections.map((collection, index) => (
           <motion.div
             key={collection.id}
             className="collection-card"
