@@ -1,104 +1,183 @@
-// services/api.ts
-import axios, { AxiosInstance } from 'axios';
-import { ContactForm } from '../types/form';
+// client/src/services/api.ts - 添加删除博客文章功能
 
-// API URLs
-const CHAT_API_URL = 'https://taylorzhu-portfolio-backend-0vl5.onrender.com/api/chat';
-const FORM_API_URL = 'http://localhost:3001/api/form/submit';
+import axios from "axios";
 
-// 创建 axios 实例
-const createAxiosInstance = (baseURL: string): AxiosInstance => {
-  return axios.create({
-    baseURL,
-    timeout: 15000, // 15秒超时
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-};
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
 
-const chatInstance = createAxiosInstance(CHAT_API_URL);
-const formInstance = createAxiosInstance(FORM_API_URL);
-
-// 重试配置
-const MAX_RETRIES = 2;
-const RETRY_DELAY = 1000;
-
-// 通用重试函数
-const withRetry = async <T>(
-  operation: () => Promise<T>,
-  maxRetries: number = MAX_RETRIES,
-  delay: number = RETRY_DELAY
-): Promise<T> => {
-  let retries = 0;
-
-  const attempt = async (): Promise<T> => {
-    try {
-      return await operation();
-    } catch (error) {
-      if (retries < maxRetries) {
-        retries++;
-        await new Promise(resolve => setTimeout(resolve, delay));
-        return attempt();
-      }
-      throw error;
-    }
-  };
-
-  return attempt();
-};
-
-// 发送消息
-export const sendMessage = async (content: string): Promise<string> => {
+// 博客API
+export const getBlogPosts = async () => {
   try {
-    const response = await withRetry(() => 
-      chatInstance.post('', {
-        message: content
-      })
+    const response = await axios.get(`${API_BASE_URL}/api/blog/posts`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
+    throw error;
+  }
+};
+
+export const getBlogPost = async (id: string) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/blog/posts/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching blog post:", error);
+    throw error;
+  }
+};
+
+export const createBlogPost = async (postData: any) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/api/blog/posts`,
+      postData
     );
+    return response.data;
+  } catch (error) {
+    console.error("Error creating blog post:", error);
+    throw error;
+  }
+};
+
+export const updateBlogPost = async (id: string, postData: any) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/api/blog/posts/${id}`,
+      postData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating blog post:", error);
+    throw error;
+  }
+};
+
+export const deletePost = async (id: string) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/api/blog/posts/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting blog post:", error);
+    throw error;
+  }
+};
+
+export const getBlogCollections = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/blog/collections`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching blog collections:", error);
+    throw error;
+  }
+};
+
+export const getBlogCollection = async (id: string) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/api/blog/collections/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching blog collection:", error);
+    throw error;
+  }
+};
+
+// 项目API
+export const getProjects = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/projects`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    throw error;
+  }
+};
+
+export const getProject = async (id: number) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/projects/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    throw error;
+  }
+};
+
+export const createProject = async (projectData: any) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/api/projects`,
+      projectData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error creating project:", error);
+    throw error;
+  }
+};
+
+export const updateProject = async (id: number, projectData: any) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/api/projects/${id}`,
+      projectData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating project:", error);
+    throw error;
+  }
+};
+
+export const deleteProject = async (id: number) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/api/projects/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting project:", error);
+    throw error;
+  }
+};
+
+// 联系表单API
+export const submitContactForm = async (formData: any) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/api/form/submit`,
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    throw error;
+  }
+};
+
+// 聊天API
+export const sendMessage = async (content: string) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/api/chat`, {
+      message: content,
+    });
 
     if (!response.data?.choices?.[0]?.message?.content) {
-      throw new Error('Invalid response format');
+      throw new Error("Invalid response format");
     }
 
     return response.data.choices[0].message.content;
   } catch (error) {
-    console.error('Error sending message:', error);
+    console.error("Error sending message:", error);
     if (axios.isAxiosError(error)) {
-      if (error.code === 'ECONNABORTED') {
-        throw new Error('Request timed out. Please try again.');
+      if (error.code === "ECONNABORTED") {
+        throw new Error("Request timed out. Please try again.");
       }
       if (error.response?.status === 429) {
-        throw new Error('Too many requests. Please try again later.');
+        throw new Error("Too many requests. Please try again later.");
       }
     }
-    throw new Error('Failed to send message. Please try again.');
-  }
-};
-
-// 提交联系表单
-export const submitContactForm = async (formData: ContactForm): Promise<any> => {
-  try {
-    const response = await withRetry(() => 
-      formInstance.post('', formData)
-    );
-
-    if (!response.data) {
-      throw new Error('Invalid response format');
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error('Error submitting form:', error);
-    if (axios.isAxiosError(error)) {
-      if (error.code === 'ECONNABORTED') {
-        throw new Error('Request timed out. Please try again.');
-      }
-      if (error.response?.status === 429) {
-        throw new Error('Too many requests. Please try again later.');
-      }
-    }
-    throw new Error('Failed to submit form. Please try again.');
+    throw new Error("Failed to send message. Please try again.");
   }
 };
 // // client/src/services/api.ts
@@ -113,11 +192,11 @@ export const submitContactForm = async (formData: ContactForm): Promise<any> => 
 //         message: content  // 修改为符合新后端 API 的格式
 //       })
 //     });
-    
+
 //     if (!response.ok) {
 //       throw new Error('Network response was not ok');
 //     }
-    
+
 //     const data = await response.json();
 //     return data.choices[0].message.content;
 //   } catch (error) {
@@ -213,7 +292,7 @@ export const submitContactForm = async (formData: ContactForm): Promise<any> => 
 // 克服挑战的经历:
 //   在智能电网故障传播模型研究中：
 //   - 深入文献研究
-//   - 设计创新的采样算法 
+//   - 设计创新的采样算法
 //   - 与指导教授多次讨论和迭代
 //   成功将网络节点故障传播范围显著缩小
 
@@ -300,11 +379,11 @@ export const submitContactForm = async (formData: ContactForm): Promise<any> => 
 // if (!API_KEY) {
 //     throw new Error('Missing OpenAI API key');
 //   }
-  
+
 // export async function sendMessage(content: string) {
 //   try {
 //     console.log('开始API调用，使用的内容:', content);
-    
+
 //     const response = await fetch(API_URL, {
 //       method: 'POST',
 //       headers: {
@@ -329,11 +408,11 @@ export const submitContactForm = async (formData: ContactForm): Promise<any> => 
 //     if (response.status === 429) {
 //         return 'Sorry，API calls ran out, please email me: taylorzhu.jobs@gmail.com';
 //       }
-  
+
 //       if (!response.ok) {
 //         return 'Sorry, something went wrong, please try again!';
 //       }
-  
+
 //       const data = await response.json();
 //       return data.choices[0].message.content;
 //     } catch (error) {

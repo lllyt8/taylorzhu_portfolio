@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { blogPosts } from '../../data/blog/blogData';
-// import { blogCollections } from '../../data/blog/collectionsData';
+import { getBlogPost, getBlogCollection } from '../../services/api';
 import { BlogPost as BlogPostType } from '../../types/blog';
 
 interface BlogPostProps {
@@ -13,26 +12,34 @@ interface BlogPostProps {
 const BlogPost = ({ postId, onBack, onViewCollection }: BlogPostProps) => {
   const [post, setPost] = useState<BlogPostType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
-    // 查找匹配的博客文章
-    const foundPost = blogPosts.find(p => p.id === postId);
+    const fetchPost = async () => {
+      try {
+        setLoading(true);
+        const data = await getBlogPost(postId);
+        setPost(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching blog post:', err);
+        setError('Failed to load blog post. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
     
-    if (foundPost) {
-      setPost(foundPost);
-    }
-    
-    setLoading(false);
+    fetchPost();
   }, [postId]);
 
   if (loading) {
     return <div className="loading">Loading...</div>;
   }
 
-  if (!post) {
+  if (error || !post) {
     return (
       <div className="not-found">
-        <h2>Post not found</h2>
+        <h2>{error || 'Post not found'}</h2>
         <button onClick={onBack} className="back-button">Back to Blog</button>
       </div>
     );
@@ -59,7 +66,7 @@ const BlogPost = ({ postId, onBack, onViewCollection }: BlogPostProps) => {
         <h1>{post.title}</h1>
         
         <div className="blog-post-meta">
-          <span className="post-date">{post.date}</span>
+          <span className="post-date">{new Date(post.date).toLocaleDateString()}</span>
           <span className="post-read-time">{post.readTime} min read</span>
         </div>
         
@@ -77,7 +84,6 @@ const BlogPost = ({ postId, onBack, onViewCollection }: BlogPostProps) => {
       )}
       
       <div className="blog-post-content">
-        {/* 在实际应用中，这里会使用Markdown渲染器处理内容 */}
         <div dangerouslySetInnerHTML={{ __html: formatContent(post.content || '') }} />
       </div>
       
@@ -94,7 +100,6 @@ const BlogPost = ({ postId, onBack, onViewCollection }: BlogPostProps) => {
 };
 
 // 简单的内容格式化函数，将Markdown格式转换为HTML
-// 在实际应用中，你可能需要使用一个完整的Markdown渲染库
 function formatContent(content: string): string {
   // 简单的标题转换
   content = content.replace(/^# (.*$)/gim, '<h1>$1</h1>');

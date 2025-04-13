@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { blogCollections } from '../../data/blog/collectionsData';
-import { blogPosts } from '../../data/blog/blogData';
-import { BlogCollection, BlogPost } from '../../types/blog';
+import { getBlogCollection, getBlogPosts } from '../../services/api';
+import { BlogCollection, BlogPost, BlogChapter } from '../../types/blog';
+
 
 interface CollectionViewProps {
   collectionId: string;
@@ -14,37 +14,49 @@ const CollectionView = ({ collectionId, onBack, onSelectPost }: CollectionViewPr
   const [collection, setCollection] = useState<BlogCollection | null>(null);
   const [posts, setPosts] = useState<Record<string, BlogPost[]>>({});
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
-    // 查找匹配的合集
-    const foundCollection = blogCollections.find(c => c.id === collectionId);
+    const fetchCollectionAndPosts = async () => {
+      try {
+        setLoading(true);
+        // 获取集合信息
+        const collectionData = await getBlogCollection(collectionId);
+        setCollection(collectionData);
+        
+        // 获取所有文章
+        const allPosts = await getBlogPosts();
+        
+        // 整理文章数据
+        const postsMap: Record<string, BlogPost[]> = {};
+        
+        collectionData.chapters.forEach((chapter: BlogChapter) => {
+          postsMap[chapter.id] = chapter.articles
+            .map((articleId: string) => allPosts.find((post:BlogPost) => post.id === articleId))
+            .filter((post): post is BlogPost => post !== undefined);
+        });
+        
+        setPosts(postsMap);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching collection:', err);
+        setError('Failed to load collection. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
     
-    if (foundCollection) {
-      setCollection(foundCollection);
-      
-      // 整理文章数据
-      const postsMap: Record<string, BlogPost[]> = {};
-      
-      foundCollection.chapters.forEach(chapter => {
-        postsMap[chapter.id] = chapter.articles
-          .map(articleId => blogPosts.find(post => post.id === articleId))
-          .filter((post): post is BlogPost => post !== undefined);
-      });
-      
-      setPosts(postsMap);
-    }
-    
-    setLoading(false);
+    fetchCollectionAndPosts();
   }, [collectionId]);
 
   if (loading) {
     return <div className="loading">Loading...</div>;
   }
 
-  if (!collection) {
+  if (error || !collection) {
     return (
       <div className="not-found">
-        <h2>Collection not found</h2>
+        <h2>{error || 'Collection not found'}</h2>
         <button onClick={onBack} className="back-button">Back to Blog</button>
       </div>
     );
@@ -78,7 +90,7 @@ const CollectionView = ({ collectionId, onBack, onSelectPost }: CollectionViewPr
       </div>
       
       <div className="collection-chapters">
-        {collection.chapters.map(chapter => (
+        {collection.chapters.map((chapter: BlogChapter) => (
           <div key={chapter.id} className="collection-chapter">
             <h2 className="chapter-title">
               {chapter.order}. {chapter.title}
