@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// 不再需要 useState
 import { motion } from 'framer-motion';
 import { BlogPost } from '../../types/blog';
 
@@ -8,13 +8,12 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({ post, onSelect }: BlogCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
+  // 移除未使用的状态
 
   return (
     <motion.div
       className="blog-card"
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      // 使用 whileHover 就足够了，不需要额外的状态管理
       whileHover={{ y: -5 }}
       onClick={onSelect}
     >
@@ -26,16 +25,16 @@ const BlogCard = ({ post, onSelect }: BlogCardProps) => {
           </div>
         )}
       </div>
-      
+
       <div className="blog-card-content">
         <div className="blog-meta">
-          <span className="blog-date">{post.date}</span>
+          <span className="blog-date">{new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
           <span className="blog-read-time">{post.readTime} min read</span>
         </div>
-        
+
         <h3 className="blog-title">{post.title}</h3>
         <p className="blog-excerpt">{post.excerpt}</p>
-        
+
         <div className="blog-tags">
           {post.tags.map(tag => (
             <span key={tag} className="blog-tag">{tag}</span>

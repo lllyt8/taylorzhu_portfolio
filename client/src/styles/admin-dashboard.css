@@ -182,3 +182,85 @@
       grid-template-columns: 1fr;
     }
   }
+
+  /* 添加到 client/src/styles/admin-dashboard.css */
+
+/* 设置面板样式 */
+.admin-settings {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.admin-settings h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.admin-profile-section {
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.admin-profile-info {
+  margin-bottom: 2rem;
+}
+
+.profile-item {
+  display: flex;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-item:last-child {
+  border-bottom: none;
+}
+
+.profile-item label {
+  width: 120px;
+  font-weight: 600;
+  color: #555;
+}
+
+.profile-item span {
+  flex: 1;
+  color: #333;
+}
+
+.admin-action-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.admin-button {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.admin-button.secondary {
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.admin-button.secondary:hover {
+  background: #e0e0e0;
+}
+
+.admin-button.danger {
+  background: #f44336;
+  color: white;
+}
+
+.admin-button.danger:hover {
+  background: #d32f2f;
+}

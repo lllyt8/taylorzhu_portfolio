@@ -3,7 +3,7 @@ import { Message, MessageStatus } from '../../types/chat';
 import MessageInput from './MessageInput';
 import TypingMessage from './TypingMessage';
 import { sendMessage } from '../../services/api';
-import '../../styles/chat.css';  
+import '../../styles/chat.css';
 
 const ChatWindow = () => {
   // 从 localStorage 读取历史记录
@@ -20,20 +20,20 @@ const ChatWindow = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // 重试消息发送
-  const retryMessage = useCallback(async (messageId: string) => {
+  const handleRetry = useCallback(async (messageId: string) => {
     const messageToRetry = messages.find(m => m.id === messageId);
     if (!messageToRetry || messageToRetry.sender !== 'user') return;
 
     // 更新消息状态为发送中
-    setMessages(prev => prev.map(m => 
+    setMessages(prev => prev.map(m =>
       m.id === messageId ? { ...m, status: 'sending' as MessageStatus } : m
     ));
 
     try {
       const response = await sendMessage(messageToRetry.content);
-      
+
       // 更新消息状态为成功
-      setMessages(prev => prev.map(m => 
+      setMessages(prev => prev.map(m =>
         m.id === messageId ? { ...m, status: 'sent' as MessageStatus } : m
       ));
 
@@ -48,7 +48,7 @@ const ChatWindow = () => {
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       // 更新消息状态为错误
-      setMessages(prev => prev.map(m => 
+      setMessages(prev => prev.map(m =>
         m.id === messageId ? { ...m, status: 'error' as MessageStatus } : m
       ));
     }
@@ -87,9 +87,9 @@ const ChatWindow = () => {
       console.log('Sending message:', content);
       const aiResponse = await sendMessage(content);
       console.log('Received response:', aiResponse);
-      
+
       // 更新用户消息状态为已发送
-      setMessages(prev => prev.map(m => 
+      setMessages(prev => prev.map(m =>
         m.id === userMessage.id ? { ...m, status: 'sent' } : m
       ));
 
@@ -104,13 +104,13 @@ const ChatWindow = () => {
         timestamp: new Date(),
         status: 'sent'
       };
-      
+
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An error occurred';
       console.error('Error in handleSendMessage:', error);
-      
-      setMessages(prev => prev.map(m => 
+
+      setMessages(prev => prev.map(m =>
         m.id === userMessage.id ? { ...m, status: 'error' } : m
       ));
 
@@ -137,26 +137,28 @@ const ChatWindow = () => {
     <div className="chat-window">
       <div className="message-list">
         {messages.map((message) => (
-          <div 
-            key={message.id} 
+          <div
+            key={message.id}
             className={`message message-${message.sender} message-${message.status}`}
           >
             {message.id === typingMessageId ? (
-              <TypingMessage 
-                content={message.content} 
+              <TypingMessage
+                content={message.content}
                 onComplete={() => setTypingMessageId(null)}
               />
             ) : (
               <div className="message-content">{message.content}</div>
             )}
+
             <div className="message-footer">
               <span className="message-time">
                 {new Date(message.timestamp).toLocaleTimeString()}
               </span>
               {message.status === 'error' && message.sender === 'user' && (
                 <button
-                  onClick={() => retryMessage(message.id)}
+                  onClick={() => handleRetry(message.id)}
                   className="retry-button"
+                  type="button"
                   aria-label="Retry sending message"
                 >
                   <span className="material-icons">refresh</span>
@@ -171,14 +173,19 @@ const ChatWindow = () => {
           </div>
         ))}
         {isLoading && (
-          <div className="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+          <>
+            <div className="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div className="loading-indicator">
+              AI is thinking...
+            </div>
+          </>
         )}
         <div ref={messagesEndRef} />
-        <button 
+        <button
           onClick={clearHistory}
           className="clear-history-button"
           type="button"

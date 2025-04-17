@@ -158,9 +158,16 @@ export const submitContactForm = async (formData: any) => {
 // 聊天API
 export const sendMessage = async (content: string) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/chat`, {
-      message: content,
-    });
+    // 设置超时时间为15秒
+    const response = await axios.post(
+      `${API_BASE_URL}/api/chat`,
+      {
+        message: content,
+      },
+      {
+        timeout: 20000, // 20秒超时
+      }
+    );
 
     if (!response.data?.choices?.[0]?.message?.content) {
       throw new Error("Invalid response format");
@@ -170,11 +177,21 @@ export const sendMessage = async (content: string) => {
   } catch (error) {
     console.error("Error sending message:", error);
     if (axios.isAxiosError(error)) {
-      if (error.code === "ECONNABORTED") {
-        throw new Error("Request timed out. Please try again.");
+      if (error.code === "ECONNABORTED" || error.message.includes("timeout")) {
+        throw new Error(
+          "Request timed out. The AI is taking too long to respond. Please try again."
+        );
       }
       if (error.response?.status === 429) {
         throw new Error("Too many requests. Please try again later.");
+      }
+      if (error.response?.status === 504) {
+        throw new Error(
+          "The AI is taking too long to respond. Please try again."
+        );
+      }
+      if (error.response?.data?.message) {
+        throw new Error(error.response.data.message);
       }
     }
     throw new Error("Failed to send message. Please try again.");

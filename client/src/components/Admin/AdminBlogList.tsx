@@ -118,7 +118,8 @@ const AdminBlogList: React.FC = () => {
         </div>
         
         <div className="category-filter">
-          <select 
+          <select
+            aria-label="Filter posts by category"
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
           >

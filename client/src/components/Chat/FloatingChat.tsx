@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface FloatingChatProps {
   isVisible: boolean;
   setIsVisible: (visible: boolean) => void;
+  isHomePage?: boolean;
 }
 
-const FloatingChat = ({ isVisible, setIsVisible }: FloatingChatProps) => {
+const FloatingChat = ({ isVisible, setIsVisible, isHomePage = false }: FloatingChatProps) => {
   const [isMinimized, setIsMinimized] = useState(false);
 
   // const toggleChat = () => {
@@ -20,6 +21,14 @@ const FloatingChat = ({ isVisible, setIsVisible }: FloatingChatProps) => {
 
   const minimizeChat = () => {
     setIsMinimized(true);
+  };
+
+  const toggleChat = () => {
+    if (isMinimized) {
+      setIsMinimized(false);
+    } else {
+      setIsVisible(!isVisible);
+    }
   };
 
   return (
@@ -36,14 +45,14 @@ const FloatingChat = ({ isVisible, setIsVisible }: FloatingChatProps) => {
             <div className="chat-header">
               <span>Chat with Taylor's AI Assistant</span>
               <div className="chat-controls">
-                <button 
+                <button
                   onClick={minimizeChat}
                   type="button"
                   aria-label="Minimize chat"
                 >
                   −
                 </button>
-                <button 
+                <button
                   onClick={() => setIsVisible(false)}
                   type="button"
                   aria-label="Close chat"
@@ -61,23 +70,25 @@ const FloatingChat = ({ isVisible, setIsVisible }: FloatingChatProps) => {
         )}
       </AnimatePresence>
 
-      {/* <motion.button
-        className={`chat-toggle-button ${isVisible ? 'active' : ''}`}
-        onClick={toggleChat}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Toggle chat window"
-        type="button"
-      >
-        {!isVisible || isMinimized ? (
-          <>
-            <span className="chat-icon">💬</span>
-            <span className="chat-label">Chat with AI</span>
-          </>
-        ) : (
-          <span className="chat-icon">×</span>
-        )}
-      </motion.button> */}
+      {!isHomePage && (
+        <motion.button
+          className={`chat-toggle-button ${isVisible ? 'active' : ''}`}
+          onClick={toggleChat}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Toggle chat window"
+          type="button"
+        >
+          {!isVisible || isMinimized ? (
+            <>
+              <span className="chat-icon">💬</span>
+              <span className="chat-label">Chat with AI</span>
+            </>
+          ) : (
+            <span className="chat-icon">×</span>
+          )}
+        </motion.button>
+      )}
     </div>
   );
 };

@@ -1,16 +1,21 @@
+// client/src/components/Blog/CollectionView.tsx
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getBlogCollection, getBlogPosts } from '../../services/api';
 import { BlogCollection, BlogPost, BlogChapter } from '../../types/blog';
 
-
 interface CollectionViewProps {
-  collectionId: string;
-  onBack: () => void;
-  onSelectPost: (postId: string) => void;
+  collectionId?: string; // 可选，兼容旧代码
+  onBack?: () => void; // 可选，兼容旧代码
+  onSelectPost?: (postId: string) => void; // 可选，兼容旧代码
 }
 
-const CollectionView = ({ collectionId, onBack, onSelectPost }: CollectionViewProps) => {
+const CollectionView = ({ collectionId: propCollectionId, onBack, onSelectPost }: CollectionViewProps) => {
+  const { id: paramCollectionId } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const collectionId = propCollectionId || paramCollectionId || '';
+  
   const [collection, setCollection] = useState<BlogCollection | null>(null);
   const [posts, setPosts] = useState<Record<string, BlogPost[]>>({});
   const [loading, setLoading] = useState<boolean>(true);
@@ -46,8 +51,26 @@ const CollectionView = ({ collectionId, onBack, onSelectPost }: CollectionViewPr
       }
     };
     
-    fetchCollectionAndPosts();
+    if (collectionId) {
+      fetchCollectionAndPosts();
+    }
   }, [collectionId]);
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      navigate('/blog');
+    }
+  };
+
+  const handleSelectPost = (postId: string) => {
+    if (onSelectPost) {
+      onSelectPost(postId);
+    } else {
+      navigate(`/blog/post/${postId}`);
+    }
+  };
 
   if (loading) {
     return <div className="loading">Loading...</div>;
@@ -57,11 +80,12 @@ const CollectionView = ({ collectionId, onBack, onSelectPost }: CollectionViewPr
     return (
       <div className="not-found">
         <h2>{error || 'Collection not found'}</h2>
-        <button onClick={onBack} className="back-button">Back to Blog</button>
+        <button onClick={handleBack} className="back-button">Back to Blog</button>
       </div>
     );
   }
 
+  // Rest of the component remains the same
   return (
     <motion.div 
       className="collection-view"
@@ -69,10 +93,11 @@ const CollectionView = ({ collectionId, onBack, onSelectPost }: CollectionViewPr
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <button onClick={onBack} className="back-button">
+      <button onClick={handleBack} className="back-button">
         &larr; Back to Blog
       </button>
       
+      {/* Rest of the component */}
       <div className="collection-header">
         <h1>{collection.title}</h1>
         <p className="collection-description">{collection.description}</p>
@@ -103,7 +128,7 @@ const CollectionView = ({ collectionId, onBack, onSelectPost }: CollectionViewPr
                   key={post.id}
                   className="chapter-article"
                   whileHover={{ x: 10 }}
-                  onClick={() => onSelectPost(post.id)}
+                  onClick={() => handleSelectPost(post.id)}
                 >
                   <div className="article-order">{post.order}</div>
                   <div className="article-info">

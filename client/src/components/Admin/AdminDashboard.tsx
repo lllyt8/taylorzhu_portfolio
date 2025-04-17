@@ -1,71 +1,41 @@
 // client/src/components/Admin/AdminDashboard.tsx
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+// import React, { useState } from 'react';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+// import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import AdminBlogList from './AdminBlogList';
-import '../../styles/admin-dashboard.css'; // 我们稍后会创建这个样式文件
+import AdminProjectList from './AdminProjectList';
+import AdminSettings from './AdminSettings'; // 需要创建这个组件
+import AdminOverview from './AdminOverview'; // 需要创建这个组件
+import '../../styles/admin-dashboard.css';
 
 interface AdminDashboardProps {
   onExit: () => void;
 }
 
-type AdminSection = 'dashboard' | 'blog' | 'projects' | 'settings';
-
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
-  const [activeSection, setActiveSection] = useState<AdminSection>('dashboard');
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await logout();
     onExit();
   };
 
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'dashboard':
-        return (
-          <div className="admin-dashboard-overview">
-            <h2>Dashboard Overview</h2>
-            <div className="admin-stats-grid">
-              <div className="admin-stat-card">
-                <h3>Blog Posts</h3>
-                <p className="stat-number">12</p>
-              </div>
-              <div className="admin-stat-card">
-                <h3>Projects</h3>
-                <p className="stat-number">8</p>
-              </div>
-              <div className="admin-stat-card">
-                <h3>Messages</h3>
-                <p className="stat-number">5</p>
-              </div>
-            </div>
-            <div className="admin-recent-activity">
-              <h3>Recent Activity</h3>
-              <p>No recent activity to display.</p>
-            </div>
-          </div>
-        );
-      case 'blog':
-        return <AdminBlogList />;
-      case 'projects':
-        return (
-          <div className="admin-section-placeholder">
-            <h2>Project Management</h2>
-            <p>Project management functionality coming soon.</p>
-          </div>
-        );
-      case 'settings':
-        return (
-          <div className="admin-section-placeholder">
-            <h2>Settings</h2>
-            <p>Settings functionality coming soon.</p>
-          </div>
-        );
-      default:
-        return null;
-    }
+  const handleNavigation = (path: string) => {
+    navigate(`/admin-dashboard/${path}`);
   };
+
+  // 确定当前活动部分
+  const getCurrentSection = () => {
+    const path = window.location.pathname;
+    if (path.includes('/admin-dashboard/blog')) return 'blog';
+    if (path.includes('/admin-dashboard/projects')) return 'projects';
+    if (path.includes('/admin-dashboard/settings')) return 'settings';
+    return 'dashboard';
+  };
+
+  const activeSection = getCurrentSection();
 
   return (
     <div className="admin-dashboard-container">
@@ -80,25 +50,25 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
         <nav className="admin-navigation">
           <button
             className={`admin-nav-item ${activeSection === 'dashboard' ? 'active' : ''}`}
-            onClick={() => setActiveSection('dashboard')}
+            onClick={() => handleNavigation('')}
           >
             Dashboard
           </button>
           <button
             className={`admin-nav-item ${activeSection === 'blog' ? 'active' : ''}`}
-            onClick={() => setActiveSection('blog')}
+            onClick={() => handleNavigation('blog')}
           >
             Blog Manager
           </button>
           <button
             className={`admin-nav-item ${activeSection === 'projects' ? 'active' : ''}`}
-            onClick={() => setActiveSection('projects')}
+            onClick={() => handleNavigation('projects')}
           >
             Projects
           </button>
           <button
             className={`admin-nav-item ${activeSection === 'settings' ? 'active' : ''}`}
-            onClick={() => setActiveSection('settings')}
+            onClick={() => handleNavigation('settings')}
           >
             Settings
           </button>
@@ -115,7 +85,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
       </div>
       
       <div className="admin-content">
-        {renderSection()}
+        <Routes>
+          <Route path="/" element={<AdminOverview />} />
+          <Route path="/blog/*" element={<AdminBlogList />} />
+          <Route path="/projects/*" element={<AdminProjectList />} />
+          <Route path="/settings" element={<AdminSettings handleLogout={handleLogout} />} />
+          <Route path="*" element={<Navigate to="/admin-dashboard" replace />} />
+        </Routes>
       </div>
     </div>
   );

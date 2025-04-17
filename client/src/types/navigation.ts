@@ -20,5 +20,5 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "projects", label: "Projects" },
   { id: "blog", label: "Blog" },
   { id: "contact", label: "Contact" },
-  { id: "admin", label: "Admin" }, // 添加管理员导航
+  // Admin 页面已从导航中移除，只能通过直接输入 URL 访问
 ];

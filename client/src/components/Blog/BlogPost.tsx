@@ -1,19 +1,26 @@
+// client/src/components/Blog/BlogPost.tsx
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { getBlogPost, getBlogCollection } from '../../services/api';
+import { useParams, useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import { getBlogPost } from '../../services/api';
 import { BlogPost as BlogPostType } from '../../types/blog';
 
 interface BlogPostProps {
-  postId: string;
-  onBack: () => void;
-  onViewCollection?: (collectionId: string) => void;
+  postId?: string; // 可选，兼容旧代码
+  onBack?: () => void; // 可选，兼容旧代码
+  onViewCollection?: (collectionId: string) => void; // 可选，兼容旧代码
 }
 
-const BlogPost = ({ postId, onBack, onViewCollection }: BlogPostProps) => {
+const BlogPost = ({ postId: propPostId, onBack, onViewCollection }: BlogPostProps) => {
+  const { id: paramPostId } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const postId = propPostId || paramPostId || '';
+
   const [post, setPost] = useState<BlogPostType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -28,9 +35,27 @@ const BlogPost = ({ postId, onBack, onViewCollection }: BlogPostProps) => {
         setLoading(false);
       }
     };
-    
-    fetchPost();
+
+    if (postId) {
+      fetchPost();
+    }
   }, [postId]);
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      navigate('/blog');
+    }
+  };
+
+  const handleViewCollection = (collectionId: string) => {
+    if (onViewCollection) {
+      onViewCollection(collectionId);
+    } else {
+      navigate(`/blog/collection/${collectionId}`);
+    }
+  };
 
   if (loading) {
     return <div className="loading">Loading...</div>;
@@ -40,57 +65,52 @@ const BlogPost = ({ postId, onBack, onViewCollection }: BlogPostProps) => {
     return (
       <div className="not-found">
         <h2>{error || 'Post not found'}</h2>
-        <button onClick={onBack} className="back-button">Back to Blog</button>
+        <button type="button" onClick={handleBack} className="back-button">Back to Blog</button>
       </div>
     );
   }
 
-  const handleViewCollection = () => {
-    if (post.collectionId && onViewCollection) {
-      onViewCollection(post.collectionId);
-    }
-  };
-
   return (
-    <motion.div 
+    <motion.div
       className="blog-post-container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <button onClick={onBack} className="back-button">
+      <button type="button" onClick={handleBack} className="back-button">
         &larr; Back to Blog
       </button>
-      
+
+      {/* Rest of the component remains the same */}
       <div className="blog-post-header">
         <h1>{post.title}</h1>
-        
+
         <div className="blog-post-meta">
-          <span className="post-date">{new Date(post.date).toLocaleDateString()}</span>
+          <span className="post-date">{new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
           <span className="post-read-time">{post.readTime} min read</span>
         </div>
-        
+
         <div className="blog-post-tags">
           {post.tags.map(tag => (
             <span key={tag} className="post-tag">{tag}</span>
           ))}
         </div>
       </div>
-      
+
       {post.coverImage && (
         <div className="blog-post-cover">
           <img src={post.coverImage} alt={post.title} />
         </div>
       )}
-      
+
       <div className="blog-post-content">
-        <div dangerouslySetInnerHTML={{ __html: formatContent(post.content || '') }} />
+        <ReactMarkdown>{post.content || ''}</ReactMarkdown>
       </div>
-      
+
       {post.collectionId && (
         <div className="collection-navigation">
           <h3>This post is part of a collection</h3>
-          <button onClick={handleViewCollection} className="view-collection-btn">
+          <button type="button" onClick={() => handleViewCollection(post.collectionId!)} className="view-collection-btn">
             View Complete Collection
           </button>
         </div>
@@ -99,18 +119,6 @@ const BlogPost = ({ postId, onBack, onViewCollection }: BlogPostProps) => {
   );
 };
 
-// 简单的内容格式化函数，将Markdown格式转换为HTML
-function formatContent(content: string): string {
-  // 简单的标题转换
-  content = content.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-  content = content.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-  content = content.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-  
-  // 段落处理
-  content = content.replace(/^(?!<h[1-6]>)(.*$)/gim, '<p>$1</p>');
-  content = content.replace(/<p><\/p>/gim, '');
-  
-  return content;
-}
+// 使用 ReactMarkdown 组件渲染 Markdown 内容，不再需要手动格式化
 
 export default BlogPost;

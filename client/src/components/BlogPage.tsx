@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+// import { useNavigate } from 'react-router-dom';
 import BlogList from './Blog/BlogList';
 import CollectionsList from './Blog/CollectionsList';
 import '../styles/blog-page.css';
@@ -9,8 +10,9 @@ interface BlogPageProps {
   onSelectCollection: (collectionId: string) => void;
 }
 
-const BlogPage = ({ onSelectPost, onSelectCollection }: BlogPageProps) => {
+const BlogPage: React.FC<BlogPageProps> = ({ onSelectPost, onSelectCollection }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  // const navigate = useNavigate();
   const categories = ['all', 'web', 'energy', 'architecture', 'performance'];
 
   return (
