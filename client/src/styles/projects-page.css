@@ -76,7 +76,17 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+.preview-image.loading {
+  opacity: 0.5;
+  filter: blur(5px);
+}
+
+.preview-image.loaded {
+  opacity: 1;
+  filter: blur(0);
 }
 
 .project-card:hover .preview-image {
@@ -272,11 +282,11 @@
   .projects-section {
     padding: 2rem 1rem;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .filter-nav {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -284,20 +294,20 @@
     margin-bottom: 2rem;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .filter-btn {
     white-space: nowrap;
   }
-  
+
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .modal-overlay {
     padding: 1rem;
   }
-  
+
   .modal-content {
     max-height: 85vh;
   }

@@ -99,17 +99,40 @@
   z-index: 0;
 }
 
-.image-container img {
+.image-container img,
+.image-container picture {
   width: 100%;
   height: 100%;
   object-fit: cover;
   position: relative;
   z-index: 2;
   transform: translateY(50px);
-  filter: 
+  filter:
     contrast(0.9)     /* 增加对比度 */
     saturate(1.1)     /* 增加饱和度 */
     brightness(1.1)
+    drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* 图片加载状态 */
+.image-container img.loading {
+  opacity: 0.5;
+  filter:
+    contrast(0.9)
+    saturate(1.1)
+    brightness(1.1)
+    blur(10px)
+    drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+}
+
+.image-container img.loaded {
+  opacity: 1;
+  filter:
+    contrast(0.9)
+    saturate(1.1)
+    brightness(1.1)
+    blur(0)
     drop-shadow(0 10px 15px rgba(0,0,0,0.2));
 }
 
@@ -335,7 +358,7 @@
     font-size: 14px; /* 减小字体大小 */
     white-space: nowrap; /* 防止文字换行 */
   }
-  
+
   /* 调整气泡指向箭头的位置和大小 */
   .chat-bubble::before {
     left: -8px;

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { getProjects } from '../../services/api';
 import { Project } from '../../types/projects';
+import LazyImage from '../common/LazyImage';
 import '../../styles/projects-page.css';
 
 const ProjectsPage = () => {
@@ -34,11 +35,11 @@ const ProjectsPage = () => {
         setLoading(false);
       }
     };
-    
+
     fetchProjects();
   }, []);
 
-  const filteredProjects = projects.filter(project => 
+  const filteredProjects = projects.filter(project =>
     filter === 'all' || project.category === filter
   );
 
@@ -64,6 +65,7 @@ const ProjectsPage = () => {
         <div className="filter-nav">
           {categories.map(category => (
             <button
+              type="button"
               key={category.id}
               onClick={() => setFilter(category.id)}
               className={`filter-btn ${filter === category.id ? 'active' : ''}`}
@@ -75,7 +77,7 @@ const ProjectsPage = () => {
 
         <div className="projects-grid">
           {filteredProjects.map(project => (
-            <div 
+            <div
               key={project.id}
               onClick={() => handleSelectProject(project.id)}
               className="project-card-container"
@@ -86,17 +88,18 @@ const ProjectsPage = () => {
                 whileHover={{ y: -5 }}
               >
                 <div className="project-preview">
-                  <img 
-                    src={project.image} 
+                  <LazyImage
+                    src={project.image}
                     alt={project.title}
                     className="preview-image"
                   />
-                  <motion.div 
+                  <motion.div
                     className="preview-overlay"
                     initial={{ opacity: 0 }}
                     whileHover={{ opacity: 1 }}
                   >
-                    <button 
+                    <button
+                      type="button"
                       className="preview-btn"
                       aria-label={`View more details about ${project.title}`}
                     >

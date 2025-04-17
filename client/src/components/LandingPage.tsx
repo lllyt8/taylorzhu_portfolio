@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { PageType } from '../types/navigation';
+import ResponsiveImage from './common/ResponsiveImage';
 import '../styles/landing-page.css';
 
 interface LandingPageProps {
@@ -24,7 +25,7 @@ const pageVariants = {
 
 const LandingPage = ({ onOpenChat, onNavigate }: LandingPageProps) => {
   return (
-    <motion.div 
+    <motion.div
       className="landing-page"
       initial="initial"
       animate="animate"
@@ -37,13 +38,15 @@ const LandingPage = ({ onOpenChat, onNavigate }: LandingPageProps) => {
         <h2>Software Engineer & Researcher</h2>
         <p>Passionate about building high-performance, robust, and efficient software solutions.</p>
         <div className="action-buttons">
-          <button 
+          <button
+            type="button"
             className="primary-btn"
             onClick={() => onNavigate('about')}
           >
             About Me
           </button>
-          <button 
+          <button
+            type="button"
             className="secondary-btn"
             onClick={() => onNavigate('contact')}
           >
@@ -55,8 +58,14 @@ const LandingPage = ({ onOpenChat, onNavigate }: LandingPageProps) => {
       <div className="center-content">
         <div className="image-container">
           {/* <div className="background-circle"></div> */}
-          <img src="/profile_pic.jpg" alt="Taylor Zhu" />
-          <motion.button 
+          <ResponsiveImage
+            src="/profile_pic.jpg"
+            alt="Taylor Zhu"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            loading="eager"
+          />
+          <motion.button
+            type="button"
             className="chat-bubble"
             onClick={onOpenChat}
             whileHover={{ scale: 1.05 }}
