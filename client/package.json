@@ -12,7 +12,6 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "vite": "^6.3.2",
     "@react-spring/web": "^9.7.5",
     "@react-three/drei": "^9.121.3",
     "@react-three/fiber": "^8.17.12",
