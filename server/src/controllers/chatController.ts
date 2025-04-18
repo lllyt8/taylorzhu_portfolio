@@ -7,6 +7,15 @@ export const handleChat = async (req: Request, res: Response) => {
     const userMessage = req.body.message;
     const prompt = generatePrompt(userMessage);
 
+    // 检查API密钥是否设置
+    if (!process.env.OPENAI_API_KEY) {
+      console.error("OpenAI API key is not set");
+      return res.status(503).json({
+        error: "Service unavailable",
+        message: "聊天服务暂时不可用。请联系管理员设置有效的API密钥。",
+      });
+    }
+
     // 打印请求信息以进行调试
     console.log("API Key:", process.env.OPENAI_API_KEY ? "[Set]" : "[Not Set]");
     console.log("User message:", userMessage);
@@ -23,6 +32,7 @@ export const handleChat = async (req: Request, res: Response) => {
           headers: {
             Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
             "Content-Type": "application/json",
+            "OpenAI-Beta": "assistants=v1", // 添加最新的API版本头
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
@@ -40,6 +50,15 @@ export const handleChat = async (req: Request, res: Response) => {
       if (!response.ok) {
         const errorText = await response.text();
         console.error("OpenAI API error:", errorText);
+
+        // 检查是否是API密钥错误
+        if (response.status === 401) {
+          return res.status(503).json({
+            error: "Service unavailable",
+            message: "聊天服务暂时不可用。请联系管理员设置有效的API密钥。",
+          });
+        }
+
         throw new Error(
           `API responded with status: ${response.status}. Details: ${errorText}`
         );
