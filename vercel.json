@@ -2,8 +2,8 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
-  "buildCommand": "npm install && npm run build",
+  "buildCommand": "cp vercel-package.json package.json && npm install && npm run build",
   "outputDirectory": "dist",
-  "installCommand": "npm install",
+  "installCommand": "echo 'Skipping global install'",
   "framework": "vite"
 }
