@@ -63,8 +63,8 @@ export const handleChat = async (req: Request, res: Response) => {
 
       // 返回正确的响应格式
       res.json(data);
-    } catch (fetchError) {
-      if (fetchError.name === "AbortError") {
+    } catch (fetchError: unknown) {
+      if (fetchError instanceof Error && fetchError.name === "AbortError") {
         console.error("OpenAI API request timed out");
         return res.status(504).json({
           error: "Request timed out",
@@ -73,11 +73,12 @@ export const handleChat = async (req: Request, res: Response) => {
       }
       throw fetchError;
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Chat processing error:", error);
     res.status(500).json({
       error: "Failed to process chat request",
-      message: error.message,
+      message:
+        error instanceof Error ? error.message : "Unknown error occurred",
     });
   }
 };
