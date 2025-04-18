@@ -4,6 +4,8 @@
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
   "main": "index.js",
   "dependencies": {
+    "vite": "^6.0.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "@react-spring/web": "^9.7.5",
     "@types/three": "^0.172.0",
     "axios": "^1.7.9",
@@ -153,7 +155,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx vite build",
+    "build": "vite build",
+    "vercel-build": "node vercel-build.js",
     "start": "cd server && npm install && npm start",
     "dev": "concurrently \"vite\" \"cd server && npm run dev\""
   },
