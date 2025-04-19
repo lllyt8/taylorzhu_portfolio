@@ -12,7 +12,7 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
   }, []);
@@ -32,11 +32,11 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
     if (pageId === 'home' && location.pathname === '/') {
       return 'active';
     }
-    
+
     if (location.pathname.startsWith(`/${pageId}`)) {
       return 'active';
     }
-    
+
     return '';
   };
 
@@ -57,42 +57,44 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
   );
 
   return (
-    <header className="nav-header">
-      <div 
-        className="logo" 
-        onClick={handleLogoClick}
-        onKeyPress={(e) => e.key === 'Enter' && handleLogoClick()}
-        role="button"
-        tabIndex={0}
-        aria-label="Go to home page"
-      >
-        TZ
-      </div>
-      
-      {renderNavItems('nav-menu')}
-
-      <button 
-        type="button" 
-        className={`menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
-        onClick={toggleMobileMenu}
-        aria-label="Toggle navigation menu"
-        aria-expanded="false"
-      >
-        <div className="menu-line"></div>
-        <div className="menu-line"></div>
-        <div className="menu-line"></div>
-      </button>
-
-      {isMobileMenuOpen && (
-        <nav 
-          className="mobile-menu"
-          role="navigation"
-          aria-label="Mobile navigation"
+    <div className="nav-container">
+      <header className="nav-header">
+        <div
+          className="logo"
+          onClick={handleLogoClick}
+          onKeyPress={(e) => e.key === 'Enter' && handleLogoClick()}
+          role="button"
+          tabIndex={0}
+          aria-label="Go to home page"
         >
-          {renderNavItems('mobile-menu-items')}
-        </nav>
-      )}
-    </header>
+          TZ
+        </div>
+
+        {renderNavItems('nav-menu')}
+
+        <button
+          type="button"
+          className={`menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+        >
+          <div className="menu-line"></div>
+          <div className="menu-line"></div>
+          <div className="menu-line"></div>
+        </button>
+
+        {isMobileMenuOpen && (
+          <nav
+            className="mobile-menu"
+            role="navigation"
+            aria-label="Mobile navigation"
+          >
+            {renderNavItems('mobile-menu-items')}
+          </nav>
+        )}
+      </header>
+    </div>
   );
 };
 
