@@ -33,7 +33,7 @@ const AboutPage = () => {
           <h2>Education</h2>
           <div className="timeline">
             <div className="timeline-item">
-              <div className="timeline-date">2023 - 2024</div>
+              <div className="timeline-date"></div>
               <div className="timeline-content">
                 <h3>Doctor of Philosophy in Computer Science & Engineering</h3>
                 <p>Santa Clara University, CA</p>
@@ -43,7 +43,7 @@ const AboutPage = () => {
               </div>
             </div>
             <div className="timeline-item">
-              <div className="timeline-date">2021 - 2023</div>
+              <div className="timeline-date"></div>
               <div className="timeline-content">
                 <h3>Master of Engineering in Computer Science & Engineering</h3>
                 <p>Santa Clara University, CA</p>
@@ -53,7 +53,7 @@ const AboutPage = () => {
               </div>
             </div>
             <div className="timeline-item">
-              <div className="timeline-date">2017 - 2021</div>
+              <div className="timeline-date"></div>
               <div className="timeline-content">
                 <h3>Bachelor of Engineering in Computer Science & Engineering</h3>
                 <p>South China University of Technology, China</p>
@@ -77,35 +77,41 @@ const AboutPage = () => {
             <div className="skill-category">
               <h3>Languages</h3>
               <ul>
-                <li>JavaScript (ES6)</li>
-                <li>TypeScript</li>
                 <li>Python</li>
-                <li>Java, Scala</li>
+                <li>TypeScript</li>
+                <li>Java</li>
                 <li>Go</li>
+                <li>C/C++</li>
+                <li>Rust</li>
+                <li>Kotlin</li>
+                <li>JavaScript</li>
                 <li>SQL</li>
-                <li>Swift/SwiftUI</li>
+                <li>HTML/CSS</li>
+                <li>Ruby</li>
+                <li>PHP</li>
               </ul>
             </div>
             <div className="skill-category">
               <h3>Frameworks & Web</h3>
               <ul>
-                <li>React, Node.js</li>
-                <li>GraphQL, Express.js</li>
-                <li>Next.js, Django</li>
-                <li>Flask, FastAPI</li>
+                <li>Django, Flask, FastAPI</li>
+                <li>Spring Boot</li>
+                <li>Ruby on Rail</li>
+                <li>Express, Node.js, Next.js</li>
+                <li>React, Vue, Angular</li>               
                 <li>RESTful APIs</li>
                 <li>gRPC</li>
               </ul>
             </div>
             <div className="skill-category">
-              <h3>Cloud & Databases</h3>
+              <h3>Cloud & Databases & DevOps</h3>
               <ul>
                 <li>PostgreSQL, MySQL</li>
                 <li>MongoDB, Cassandra</li>
-                <li>DynamoDB, Redis</li>
-                <li>AWS</li>
-                <li>Google Cloud Platform</li>
-                <li>Azure</li>
+                <li>Redis, Kafka, RabbitMQ</li>
+                <li>Spark, Hive</li>
+                <li>Docker, K8s, Jenkins, Git/GitHub Action, CI/CD, Nginx, Linux</li>
+                <li>AWS, Google Cloud Platform, Azure</li>
               </ul>
             </div>
           </div>
@@ -121,7 +127,7 @@ const AboutPage = () => {
           <h2>Work Experience</h2>
           <div className="timeline">
             <div className="timeline-item">
-              <div className="timeline-date">2023 - Present</div>
+              <div className="timeline-date">2023 - 2024</div>
               <div className="timeline-content">
                 <h3>PhD Research Assistant</h3>
                 <p>Santa Clara University, School of Engineering</p>
@@ -139,8 +145,8 @@ const AboutPage = () => {
             <div className="timeline-item">
               <div className="timeline-date">2022 - 2023</div>
               <div className="timeline-content">
-                <h3>Full Stack Engineer Intern</h3>
-                <p>Kellynkai, San Jose</p>
+                <h3>Full Stack Engineer</h3>
+                <p>Kellynkai, San Francisco</p>
                 <ul>
                   <li>Developed real-time interaction system using TypeScript and React</li>
                   <li>Implemented efficient GraphQL API with schema optimization</li>
@@ -155,7 +161,7 @@ const AboutPage = () => {
             <div className="timeline-item">
               <div className="timeline-date">2020 - 2021</div>
               <div className="timeline-content">
-                <h3>Software Engineer Intern</h3>
+                <h3>Software Engineer</h3>
                 <p>Huawei, Shenzhen</p>
                 <ul>
                   <li>Developed system integration for microservices-based platform</li>
@@ -169,9 +175,9 @@ const AboutPage = () => {
               </div>
             </div>
             <div className="timeline-item">
-              <div className="timeline-date">2020</div>
+              <div className="timeline-date">2019 - 2020</div>
               <div className="timeline-content">
-                <h3>Software Engineer Intern</h3>
+                <h3>Software Engineer</h3>
                 <p>Tencent, Shenzhen</p>
                 <ul>
                   <li>Collaborated in developing file management module</li>
@@ -218,7 +224,7 @@ const AboutPage = () => {
           <div className="interests-grid">
             <div className="interest-item">
               <h3>🏄‍♂️ Surfing</h3>
-              <p>Catching waves at Linda Mar and Ocean Beach</p>
+              <p>Catching waves at Ocean Beach</p>
             </div>
             <div className="interest-item">
               <h3>🥾 Hiking</h3>
