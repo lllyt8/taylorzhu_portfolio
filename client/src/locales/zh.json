@@ -1,0 +1,72 @@
+{
+  "landing": {
+    "greeting": "你好，我是",
+    "name": "Taylor Zhu",
+    "title": "EPC Energy 软件工程实习生",
+    "description": "软件 | 数据 | 人工智能 | 目前专注于构建数据驱动的可持续能源解决方案",
+    "buttons": {
+      "about": "关于我",
+      "contact": "联系我",
+      "aboutAriaLabel": "了解更多关于 Taylor 的信息",
+      "contactAriaLabel": "与 Taylor 取得联系"
+    },
+    "chat": {
+      "bubble": "与我聊天",
+      "ariaLabel": "打开聊天窗口与 Taylor 的 AI 助手对话"
+    },
+    "stats": {
+      "experience": "段专业经历",
+      "projects": "主要项目",
+      "experienceAriaLabel": "{{value}} 年专业工作经验",
+      "projectsAriaLabel": "完成了 {{value}} 个主要项目"
+    }
+  },
+  "navigation": {
+    "home": "首页",
+    "about": "关于",
+    "services": "服务",
+    "projects": "项目",
+    "blog": "博客",
+    "creative-corner": "创意角落",
+    "contact": "联系"
+  },
+  "theme": {
+    "light": "浅色",
+    "dark": "深色",
+    "auto": "自动",
+    "toggle": "主题"
+  },
+  "language": {
+    "switch": "语言",
+    "english": "English",
+    "chinese": "中文",
+    "traditionalChinese": "繁體中文"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "retry": "重试",
+    "close": "关闭",
+    "open": "打开",
+    "save": "保存",
+    "cancel": "取消",
+    "confirm": "确认"
+  },
+  "about": {
+    "title": "关于",
+    "titleHighlight": "我",
+    "subtitle": "软件工程师 & 研究员 @ 旧金山湾区",
+    "education": "教育背景",
+    "skills": "技术专长",
+    "experience": "工作经历",
+    "projects": "最新项目",
+    "interests": "技术之外",
+    "contact": "联系方式"
+  },
+  "accessibility": {
+    "mainNavigation": "主导航",
+    "professionalStatistics": "专业统计信息",
+    "profileImage": "{{name}} 的专业头像，软件工程师",
+    "sparkles": "闪光"
+  }
+}

@@ -1,0 +1,274 @@
+.creative-corner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #333;
+}
+
+
+
+/* Header styles */
+.creative-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.creative-header h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: #4CAF50;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Content layout */
+.creative-content {
+  display: grid;
+  gap: 4rem;
+}
+
+.creative-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.creative-section h2 {
+  color: #4CAF50;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.section-intro {
+  color: #666;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+/* Bookshelf styles */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.book-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(76, 175, 80, 0.05);
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.book-item:hover {
+  transform: translateY(-5px);
+}
+
+.book-cover {
+  flex-shrink: 0;
+  width: 80px;
+  height: 120px;
+  background: #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.book-info h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.author {
+  color: #4CAF50;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.book-note {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Coffee corner styles */
+.coffee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.coffee-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(139, 69, 19, 0.05);
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.coffee-item:hover {
+  transform: translateY(-5px);
+}
+
+.coffee-image {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  background: #ddd;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.coffee-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coffee-info h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.location {
+  color: #8B4513;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.coffee-note {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Thoughts section styles */
+.thoughts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.thought-item {
+  padding: 1.5rem;
+  background: rgba(76, 175, 80, 0.05);
+  border-radius: 0.5rem;
+  border-left: 4px solid #4CAF50;
+  transition: transform 0.3s ease;
+}
+
+.thought-item:hover {
+  transform: translateY(-5px);
+}
+
+.thought-item h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.thought-date {
+  color: #4CAF50;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.thought-content {
+  color: #666;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Dark theme support */
+[data-theme="dark"] .creative-corner {
+  color: var(--text-primary, #fff);
+}
+
+[data-theme="dark"] .modal-content {
+  background: var(--card-bg, #1e1e1e);
+  color: var(--text-primary, #fff);
+}
+
+[data-theme="dark"] .book-item-mini,
+[data-theme="dark"] .coffee-item-mini {
+  background: rgba(76, 175, 80, 0.2);
+}
+
+[data-theme="dark"] .music-option {
+  background: rgba(76, 175, 80, 0.2);
+  color: var(--text-primary, #fff);
+}
+
+[data-theme="dark"] .scene-background {
+  filter: brightness(0.7);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .creative-corner {
+    padding: 1rem;
+  }
+
+  .creative-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .game-scene {
+    height: 400px;
+  }
+
+  .player {
+    font-size: 1.5rem;
+  }
+
+  .bookshelf, .coffee-counter, .music-player {
+    font-size: 2rem;
+  }
+
+  .modal-content {
+    margin: 1rem;
+    padding: 1.5rem;
+    max-width: calc(100% - 2rem);
+  }
+
+  .interaction-hint {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-scene {
+    height: 300px;
+  }
+
+  .player {
+    font-size: 1.2rem;
+  }
+
+  .bookshelf, .coffee-counter, .music-player {
+    font-size: 1.5rem;
+  }
+
+  .modal-content {
+    padding: 1rem;
+  }
+}

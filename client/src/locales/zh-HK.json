@@ -1,0 +1,72 @@
+{
+  "landing": {
+    "greeting": "你好，我係",
+    "name": "Taylor Zhu",
+    "title": "EPC Energy 軟件工程實習生",
+    "description": "軟件 | 數據 | 人工智能 | 目前專注於構建數據驅動嘅可持續能源解決方案",
+    "buttons": {
+      "about": "關於我",
+      "contact": "聯絡我",
+      "aboutAriaLabel": "了解更多關於 Taylor 嘅資訊",
+      "contactAriaLabel": "與 Taylor 取得聯絡"
+    },
+    "chat": {
+      "bubble": "同我傾偈",
+      "ariaLabel": "打開聊天窗口與 Taylor 嘅 AI 助手對話"
+    },
+    "stats": {
+      "experience": "段專業經歷",
+      "projects": "主要項目",
+      "experienceAriaLabel": "{{value}} 年專業工作經驗",
+      "projectsAriaLabel": "完成咗 {{value}} 個主要項目"
+    }
+  },
+  "navigation": {
+    "home": "首頁",
+    "about": "關於",
+    "services": "服務",
+    "projects": "項目",
+    "blog": "博客",
+    "creative-corner": "創意角落",
+    "contact": "聯絡"
+  },
+  "theme": {
+    "light": "淺色",
+    "dark": "深色",
+    "auto": "自動",
+    "toggle": "主題"
+  },
+  "language": {
+    "switch": "語言",
+    "english": "English",
+    "chinese": "中文",
+    "traditionalChinese": "繁體中文"
+  },
+  "common": {
+    "loading": "載入中...",
+    "error": "錯誤",
+    "retry": "重試",
+    "close": "關閉",
+    "open": "打開",
+    "save": "保存",
+    "cancel": "取消",
+    "confirm": "確認"
+  },
+  "about": {
+    "title": "關於",
+    "titleHighlight": "我",
+    "subtitle": "軟件工程師 & 研究員 @ 三藩市灣區",
+    "education": "教育背景",
+    "skills": "技術專長",
+    "experience": "工作經歷",
+    "projects": "最新項目",
+    "interests": "技術之外",
+    "contact": "聯絡方式"
+  },
+  "accessibility": {
+    "mainNavigation": "主導航",
+    "professionalStatistics": "專業統計資訊",
+    "profileImage": "{{name}} 嘅專業頭像，軟件工程師",
+    "sparkles": "閃光"
+  }
+}

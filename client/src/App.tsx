@@ -21,6 +21,9 @@ const BlogPost = lazy(() => import('./components/Blog/BlogPost'));
 const CollectionView = lazy(() => import('./components/Blog/CollectionView'));
 const ContactPage = lazy(() => import('./components/ContactPage'));
 const AdminLoginPage = lazy(() => import('./components/Admin/AdminLoginPage'));
+const TestPage = lazy(() => import('./components/TestPage'));
+const SimpleToggleTest = lazy(() => import('./components/SimpleToggleTest'));
+const CreativeCorner = lazy(() => import('./components/CreativeCorner.tsx'));
 const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
 
 // 懒加载样式
@@ -60,6 +63,8 @@ function App() {
       setCurrentPage('projects');
     } else if (path.startsWith('/blog')) {
       setCurrentPage('blog');
+    } else if (path.startsWith('/creative-corner')) {
+      setCurrentPage('creative-corner');
     } else if (path.startsWith('/contact')) {
       setCurrentPage('contact');
     }
@@ -124,6 +129,9 @@ function App() {
               onSelectPost={(postId) => navigate(`/blog/post/${postId}`)}
             />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/test" element={<TestPage />} />
+            <Route path="/toggle-test" element={<SimpleToggleTest />} />
+            <Route path="/creative-corner" element={<CreativeCorner />} />
 
             {/* 管理路由 */}
             <Route path="/admin-login" element={<AdminLoginPage onLoginSuccess={() => navigate('/admin-dashboard')} />} />

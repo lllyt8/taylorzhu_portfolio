@@ -5,6 +5,8 @@
   width: 100%;
   position: relative;
   overflow-x: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .content {
@@ -20,9 +22,11 @@
   right: 0;
   width: 100%;
   z-index: 1000;
-  background: #fff;
+  background: var(--nav-bg, rgba(255, 255, 255, 0.95));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   box-shadow: none;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid var(--nav-border, rgba(0,0,0,0.05));
 }
 
 /* 导航栏基础样式 */
@@ -44,7 +48,7 @@
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: var(--text-primary, #333);
   cursor: pointer;
   position: relative;
   z-index: 2;
@@ -52,7 +56,7 @@
 }
 
 .logo:hover {
-  color: #4CAF50;
+  color: var(--primary-color, #4CAF50);
 }
 
 /* 导航菜单样式 */
@@ -70,7 +74,7 @@
   border: none;
   background: none;
   font-size: 16px;
-  color: #333;
+  color: var(--text-primary, #333);
   cursor: pointer;
   padding: 8px 0;
   position: relative;
@@ -90,7 +94,7 @@
 }
 
 .nav-item:hover {
-  color: #4CAF50;
+  color: var(--primary-color, #4CAF50);
 }
 
 .nav-item:hover::after {
@@ -99,11 +103,43 @@
 
 /* 活跃导航项样式 */
 .nav-item.active {
-  color: #4CAF50;
+  color: var(--primary-color, #4CAF50);
 }
 
 .nav-item.active::after {
   width: 100%;
+}
+
+/* 导航控制面板样式 */
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* 移动端控制面板样式 */
+.mobile-controls {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-primary, rgba(0,0,0,0.1));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobile-control-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.control-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary, #666);
 }
 
 /* 汉堡菜单按钮样式 */
@@ -259,6 +295,10 @@
   }
 
   .nav-menu {
+    display: none;
+  }
+
+  .nav-controls {
     display: none;
   }
 

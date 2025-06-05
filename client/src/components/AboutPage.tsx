@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
-import FloatingNav from './FloatingNav';
+import { useLanguage } from '../contexts/LanguageContext';
 import '../styles/about-page.css';
 
 const AboutPage = () => {
+  const { t } = useLanguage();
+
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -11,15 +13,14 @@ const AboutPage = () => {
 
   return (
     <div className="about-page">
-      <FloatingNav />
-      <motion.div 
+      <motion.div
         className="about-header"
         initial={fadeIn.initial}
         animate={fadeIn.animate}
         transition={fadeIn.transition}
       >
-        <h1>About <span className="highlight">Me</span></h1>
-        <p className="subtitle">Software Engineer & Researcher @ San Francisco Bay Area</p>
+        <h1>{t('about.title')} <span className="highlight">{t('about.titleHighlight')}</span></h1>
+        <p className="subtitle">{t('about.subtitle')}</p>
       </motion.div>
 
       <div className="about-content">
@@ -30,7 +31,7 @@ const AboutPage = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2>Education</h2>
+          <h2>{t('about.education')}</h2>
           <div className="timeline">
             <div className="timeline-item">
               <div className="timeline-date"></div>
@@ -72,7 +73,7 @@ const AboutPage = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <h2>Technical Expertise</h2>
+          <h2>{t('about.skills')}</h2>
           <div className="skills-grid">
             <div className="skill-category">
               <h3>Languages</h3>
@@ -124,7 +125,7 @@ const AboutPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
-          <h2>Work Experience</h2>
+          <h2>{t('about.experience')}</h2>
           <div className="timeline">
             <div className="timeline-item">
               <div className="timeline-date">2023 - 2024</div>
@@ -200,7 +201,7 @@ const AboutPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
         >
-          <h2>Latest Project</h2>
+          <h2>{t('about.projects')}</h2>
           <div className="project-card">
             <h3>San Francisco Middle School Lunch Delivery System</h3>
             <p className="project-duration">Oct 2024 - Jan 2025</p>
@@ -213,53 +214,7 @@ const AboutPage = () => {
           </div>
         </motion.div>
 
-        <motion.div 
-          id="interests"
-          className="about-section interests-section"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0 }}
-        >
-          <h2>Beyond Tech</h2>
-          <div className="interests-grid">
-            <div className="interest-item">
-              <h3>🏄‍♂️ Surfing</h3>
-              <p>Catching waves at Ocean Beach</p>
-            </div>
-            <div className="interest-item">
-              <h3>🥾 Hiking</h3>
-              <p>Exploring Bay Area trails</p>
-            </div>
-            <div className="interest-item">
-              <h3>☕ Coffee</h3>
-              <p>Third wave coffee enthusiast</p>
-            </div>
-          </div>
-        </motion.div>
 
-        <motion.div 
-          id="contact"
-          className="about-section contact-section"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 }}
-        >
-          <h2>Get In Touch</h2>
-          <div className="contact-info">
-            <a href="tel:650-690-2359" className="contact-link">
-              <span>📱</span> 650-690-2359
-            </a>
-            <a href="mailto:taylorzhu.jobs@gmail.com" className="contact-link">
-              <span>📧</span> taylorzhu.jobs@gmail.com
-            </a>
-            <a href="https://linkedin.com/in/taylorzhu" target="_blank" rel="noopener noreferrer" className="contact-link">
-              <span>💼</span> LinkedIn
-            </a>
-            <a href="https://github.com/lllyt8" target="_blank" rel="noopener noreferrer" className="contact-link">
-              <span>💻</span> GitHub
-            </a>
-          </div>
-        </motion.div>
       </div>
     </div>
   );

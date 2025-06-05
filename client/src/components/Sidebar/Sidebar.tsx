@@ -2,6 +2,9 @@
 import { useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PageType, NAV_ITEMS } from '../../types/navigation';
+import { useLanguage } from '../../contexts/LanguageContext';
+import ThemeSwitch from '../common/ThemeSwitch';
+import LanguageToggle from '../common/LanguageToggle';
 
 interface SidebarProps {
   onNavigate: (page: PageType) => void;
@@ -12,6 +15,7 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
 
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
@@ -48,9 +52,9 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
           type="button"
           className={`nav-item ${getActiveClass(item.id)}`}
           onClick={() => handleNavigation(item.id)}
-          aria-label={`Navigate to ${item.label}`}
+          aria-label={`Navigate to ${t(`navigation.${item.id}`)}`}
         >
-          {item.label}
+          {t(`navigation.${item.id}`)}
         </button>
       ))}
     </div>
@@ -72,6 +76,12 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
 
         {renderNavItems('nav-menu')}
 
+        {/* 桌面端控制面板 */}
+        <div className="nav-controls">
+          <ThemeSwitch />
+          <LanguageToggle />
+        </div>
+
         <button
           type="button"
           className={`menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
@@ -91,6 +101,18 @@ const Sidebar = ({ onNavigate, currentPage }: SidebarProps) => {
             aria-label="Mobile navigation"
           >
             {renderNavItems('mobile-menu-items')}
+
+            {/* 移动端控制面板 */}
+            <div className="mobile-controls">
+              <div className="mobile-control-group">
+                <span className="control-label">{t('theme.toggle')}</span>
+                <ThemeSwitch />
+              </div>
+              <div className="mobile-control-group">
+                <span className="control-label">{t('language.switch')}</span>
+                <LanguageToggle />
+              </div>
+            </div>
           </nav>
         )}
       </header>

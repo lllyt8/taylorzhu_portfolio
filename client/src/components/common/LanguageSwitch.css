@@ -1,0 +1,223 @@
+/* 语言切换组件样式 */
+.language-switch {
+  position: relative;
+  display: inline-block;
+}
+
+.language-switch-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--language-switch-bg, rgba(255, 255, 255, 0.9));
+  border: 1px solid var(--language-switch-border, rgba(0, 0, 0, 0.1));
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--language-switch-color, #333);
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  min-width: 140px;
+  justify-content: space-between;
+}
+
+.language-switch-button:hover {
+  background: var(--language-switch-hover-bg, rgba(255, 255, 255, 0.95));
+  border-color: var(--language-switch-hover-border, rgba(0, 0, 0, 0.2));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.language-switch-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--language-switch-focus, #4CAF50);
+}
+
+.language-flag {
+  font-size: 1.2rem;
+}
+
+.language-label {
+  flex: 1;
+  text-align: left;
+}
+
+.dropdown-arrow {
+  font-size: 0.8rem;
+  color: var(--language-switch-arrow, #666);
+  transition: transform 0.2s ease;
+}
+
+/* 背景遮罩 */
+.language-switch-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: transparent;
+}
+
+/* 下拉菜单 */
+.language-switch-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: var(--language-dropdown-bg, #fff);
+  border: 1px solid var(--language-dropdown-border, rgba(0, 0, 0, 0.1));
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  min-width: 200px;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--language-option-color, #333);
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.language-option:hover {
+  background: var(--language-option-hover, rgba(76, 175, 80, 0.1));
+}
+
+.language-option.active {
+  background: var(--language-option-active, rgba(76, 175, 80, 0.15));
+  color: var(--language-option-active-color, #4CAF50);
+  font-weight: 600;
+}
+
+.language-option-flag {
+  font-size: 1.2rem;
+  min-width: 1.5rem;
+}
+
+.language-option-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.language-option-native {
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.language-option-english {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  line-height: 1.2;
+}
+
+.language-option-check {
+  color: var(--language-option-check, #4CAF50);
+  font-weight: bold;
+  font-size: 1rem;
+  min-width: 1rem;
+}
+
+/* 深色主题样式 */
+[data-theme="dark"] .language-switch-button {
+  --language-switch-bg: rgba(40, 40, 40, 0.9);
+  --language-switch-border: rgba(255, 255, 255, 0.1);
+  --language-switch-color: #fff;
+  --language-switch-hover-bg: rgba(50, 50, 50, 0.95);
+  --language-switch-hover-border: rgba(255, 255, 255, 0.2);
+  --language-switch-arrow: #ccc;
+}
+
+[data-theme="dark"] .language-switch-dropdown {
+  --language-dropdown-bg: #2a2a2a;
+  --language-dropdown-border: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .language-option {
+  --language-option-color: #fff;
+  --language-option-hover: rgba(76, 175, 80, 0.2);
+  --language-option-active: rgba(76, 175, 80, 0.25);
+  --language-option-active-color: #4CAF50;
+  --language-option-check: #4CAF50;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .language-switch-button {
+    min-width: 120px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .language-flag {
+    font-size: 1.1rem;
+  }
+
+  .language-switch-dropdown {
+    left: -30%;
+    right: -30%;
+    min-width: 180px;
+  }
+
+  .language-option {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .language-option-flag {
+    font-size: 1.1rem;
+  }
+
+  .language-option-english {
+    font-size: 0.7rem;
+  }
+}
+
+/* 动画增强 */
+.language-switch-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.language-switch-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.language-switch-button:hover::before {
+  left: 100%;
+}
+
+[data-theme="dark"] .language-switch-button::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}

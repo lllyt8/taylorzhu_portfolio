@@ -1,0 +1,240 @@
+/* 设置面板样式 */
+.settings-panel {
+  position: relative;
+  display: inline-block;
+}
+
+.settings-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--settings-trigger-bg, rgba(255, 255, 255, 0.9));
+  border: 1px solid var(--settings-trigger-border, rgba(0, 0, 0, 0.1));
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-trigger:hover {
+  background: var(--settings-trigger-hover-bg, rgba(255, 255, 255, 0.95));
+  border-color: var(--settings-trigger-hover-border, rgba(0, 0, 0, 0.2));
+  box-shadow: var(--shadow-md);
+}
+
+.settings-trigger:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--border-focus);
+}
+
+.settings-icon {
+  font-size: 1.2rem;
+  display: block;
+}
+
+/* 背景遮罩 */
+.settings-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 998;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* 设置内容 */
+.settings-content {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 280px;
+  background: var(--settings-content-bg, #fff);
+  border: 1px solid var(--settings-content-border, rgba(0, 0, 0, 0.1));
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 999;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--settings-divider, rgba(0, 0, 0, 0.1));
+  background: var(--settings-header-bg, rgba(248, 249, 250, 0.5));
+}
+
+.settings-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.settings-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  transition: all var(--transition-fast);
+}
+
+.settings-close:hover {
+  background: var(--settings-close-hover, rgba(0, 0, 0, 0.1));
+  color: var(--text-primary);
+}
+
+.settings-close:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--border-focus);
+}
+
+.settings-body {
+  padding: 1.25rem;
+}
+
+.setting-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.setting-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+/* 深色主题样式 */
+[data-theme="dark"] .settings-trigger {
+  --settings-trigger-bg: rgba(40, 40, 40, 0.9);
+  --settings-trigger-border: rgba(255, 255, 255, 0.1);
+  --settings-trigger-hover-bg: rgba(50, 50, 50, 0.95);
+  --settings-trigger-hover-border: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .settings-content {
+  --settings-content-bg: #2a2a2a;
+  --settings-content-border: rgba(255, 255, 255, 0.1);
+  --settings-header-bg: rgba(30, 30, 30, 0.5);
+  --settings-divider: rgba(255, 255, 255, 0.1);
+  --settings-close-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .settings-content {
+    right: -50%;
+    left: -50%;
+    min-width: 260px;
+    max-width: 90vw;
+  }
+
+  .settings-header {
+    padding: 0.875rem 1rem;
+  }
+
+  .settings-header h3 {
+    font-size: 1rem;
+  }
+
+  .settings-body {
+    padding: 1rem;
+  }
+
+  .setting-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .setting-label {
+    font-size: 0.9rem;
+  }
+}
+
+/* 固定位置变体 */
+.settings-panel.fixed {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.settings-panel.fixed .settings-content {
+  top: calc(100% + 0.5rem);
+  right: 0;
+  left: auto;
+}
+
+/* 浮动变体 */
+.settings-panel.floating {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 100;
+}
+
+.settings-panel.floating .settings-content {
+  bottom: calc(100% + 0.5rem);
+  top: auto;
+  right: 0;
+  left: auto;
+}
+
+/* 动画增强 */
+.settings-trigger {
+  position: relative;
+  overflow: hidden;
+}
+
+.settings-trigger::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.settings-trigger:hover::before {
+  left: 100%;
+}
+
+[data-theme="dark"] .settings-trigger::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}

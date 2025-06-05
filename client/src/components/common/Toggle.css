@@ -1,0 +1,112 @@
+/* Toggle 组件样式 */
+.toggle-container {
+  display: inline-block;
+  position: relative;
+}
+
+.toggle-track {
+  position: relative;
+  display: flex;
+  background: var(--toggle-bg, rgba(0, 0, 0, 0.1));
+  border-radius: 20px;
+  padding: 2px;
+  overflow: hidden;
+}
+
+.toggle-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--toggle-option-color, #666);
+  flex: 1;
+  border-radius: 18px;
+  margin: 0;
+}
+
+.toggle-option:hover {
+  background: var(--toggle-option-hover, rgba(0, 0, 0, 0.05));
+}
+
+.toggle-option.active {
+  background: var(--toggle-option-active-bg, #fff);
+  color: var(--toggle-option-active-color, #333);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-icon {
+  font-size: 0.9em;
+}
+
+.toggle-label {
+  font-size: inherit;
+}
+
+/* 尺寸变体 */
+.toggle-container.sm .toggle-track {
+  border-radius: 16px;
+  padding: 1px;
+}
+
+.toggle-container.sm .toggle-slider {
+  border-radius: 15px;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+}
+
+.toggle-container.sm .toggle-option {
+  padding: 4px 8px;
+  font-size: 12px;
+  gap: 2px;
+}
+
+.toggle-container.md .toggle-option {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.toggle-container.lg .toggle-option {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+/* 深色主题 */
+[data-theme="dark"] .toggle-track {
+  --toggle-bg: rgba(255, 255, 255, 0.1);
+  --toggle-option-color: #ccc;
+  --toggle-option-active-color: #fff;
+  --toggle-option-active-bg: #333;
+  --toggle-option-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* 悬停效果 */
+.toggle-option:hover {
+  color: var(--toggle-option-hover-color, #333);
+}
+
+[data-theme="dark"] .toggle-option:hover {
+  --toggle-option-hover-color: #fff;
+}
+
+/* 焦点样式 */
+.toggle-option:focus {
+  outline: none;
+}
+
+.toggle-track:focus-within {
+  box-shadow: 0 0 0 2px var(--primary-color, #4CAF50);
+}
+
+/* 禁用状态 */
+.toggle-container.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

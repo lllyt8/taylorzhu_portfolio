@@ -1,0 +1,72 @@
+{
+  "landing": {
+    "greeting": "Hello I'm",
+    "name": "Taylor Zhu",
+    "title": "Software Engineer Intern @ EPC Energy",
+    "description": "Software | Data | AI | Currently Building Data-driven Solutions for Sustainable Energy",
+    "buttons": {
+      "about": "About Me",
+      "contact": "Contact Me",
+      "aboutAriaLabel": "Learn more about Taylor",
+      "contactAriaLabel": "Get in touch with Taylor"
+    },
+    "chat": {
+      "bubble": "Chat with me",
+      "ariaLabel": "Open chat to talk with Taylor's AI assistant"
+    },
+    "stats": {
+      "experience": "Professional Experience",
+      "projects": "Major Projects",
+      "experienceAriaLabel": "{{value}} years of professional experience",
+      "projectsAriaLabel": "{{value}} major projects completed"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "blog": "Blog",
+    "creative-corner": "Creative Corner",
+    "contact": "Contact"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto",
+    "toggle": "Theme"
+  },
+  "language": {
+    "switch": "Language",
+    "english": "English",
+    "chinese": "中文",
+    "traditionalChinese": "繁體中文"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "close": "Close",
+    "open": "Open",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "about": {
+    "title": "About",
+    "titleHighlight": "Me",
+    "subtitle": "Software Engineer Intern @ EPC Energy | CS grad @ Santa Clara University",
+    "education": "Education",
+    "skills": "Technical Expertise",
+    "experience": "Work Experience",
+    "projects": "Latest Project",
+    "interests": "Beyond Tech",
+    "contact": "Get In Touch"
+  },
+  "accessibility": {
+    "mainNavigation": "Main navigation",
+    "professionalStatistics": "Professional statistics",
+    "profileImage": "Professional headshot of {{name}}, Software Engineer",
+    "sparkles": "sparkles"
+  }
+}
