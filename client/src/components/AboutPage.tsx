@@ -67,6 +67,96 @@ const AboutPage = () => {
         </motion.div>
 
         <motion.div 
+          id="experience"
+          className="about-section"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          <h2>{t('about.experience')}</h2>
+          <div className="timeline">
+            <div className="timeline-item">
+              <div className="timeline-date">2025 - present</div>
+              <div className="timeline-content">
+                <h3>Software Engineer Intern</h3>
+                <p>EPC Energy, San Francisco</p>
+                <ul>
+                  <li>Currently Building Data-driven Solutions for Sustainable Energy</li>
+                  <li>XGBoost, TSFresh, MLFlow, Scikit-Learn, Pandas, Numpy</li>
+                </ul>
+                <div className="company-logo">
+                  <img src="/epc.png" alt="epc logo" />
+                </div>
+              </div>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-date">2023 - 2024</div>
+              <div className="timeline-content">
+                <h3>Research Assistant</h3>
+                <p>Santa Clara University, School of Engineering</p>
+                <ul>
+                  <li>Developed a distributed network protection framework in Python</li>
+                  <li>Built a distributed computation framework using NetworkX and Scipy</li>
+                  <li>Optimized data processing achieving 70% improvement in speed</li>
+                  <li>Built custom monitoring tools using asyncio and aiohttp</li>
+                </ul>
+                <div className="company-logo">
+                  <img src="/santa-clara-university-logo.png" alt="Santa Clara University logo" />
+                </div>
+              </div>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-date">2022 - 2023</div>
+              <div className="timeline-content">
+                <h3>Full Stack Engineer Intern</h3>
+                <p>Kellynkai, San Francisco</p>
+                <ul>
+                  <li>Developed real-time interaction system using TypeScript and React</li>
+                  <li>Implemented efficient GraphQL API with schema optimization</li>
+                  <li>Leveraged WebSocket for real-time synchronization</li>
+                  <li>Collaborated with product manager and cross-functional teams</li>
+                </ul>
+                <div className="company-logo">
+                  <img src="/kellynkai_logo.png" alt="Kellynkai logo" />
+                </div>
+              </div>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-date">2020 - 2021</div>
+              <div className="timeline-content">
+                <h3>Software Engineer Intern</h3>
+                <p>Huawei, Shenzhen</p>
+                <ul>
+                  <li>Developed system integration for microservices-based platform</li>
+                  <li>Led service optimizations achieving 30% latency improvement</li>
+                  <li>Engineered high-performance ETL pipelines</li>
+                  <li>Implemented real-time data streaming with WebSocket</li>
+                </ul>
+                <div className="company-logo">
+                  <img src="/Huawei_logo.png" alt="Huawei logo" />
+                </div>
+              </div>
+            </div>
+            {/* <div className="timeline-item">
+              <div className="timeline-date">2019 - 2020</div>
+              <div className="timeline-content">
+                <h3>Software Engineer</h3>
+                <p>Tencent, Shenzhen</p>
+                <ul>
+                  <li>Collaborated in developing file management module</li>
+                  <li>Implemented robust file upload system reducing upload time by 80%</li>
+                  <li>Optimized database access patterns using Redis caching</li>
+                  <li>Designed and maintained CI/CD pipelines</li>
+                </ul>
+                <div className="company-logo">
+                  <img src="/tencent_logo.png" alt="Tencent logo" />
+                </div>
+              </div>
+            </div> */}
+          </div>
+        </motion.div>
+
+        <motion.div 
           id="skills"
           className="about-section skills-section"
           initial={{ opacity: 0, x: 20 }}
@@ -114,82 +204,6 @@ const AboutPage = () => {
                 <li>Docker, K8s, Jenkins, Git/GitHub Action, CI/CD, Nginx, Linux</li>
                 <li>AWS, Google Cloud Platform, Azure</li>
               </ul>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div 
-          id="experience"
-          className="about-section"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-        >
-          <h2>{t('about.experience')}</h2>
-          <div className="timeline">
-            <div className="timeline-item">
-              <div className="timeline-date">2023 - 2024</div>
-              <div className="timeline-content">
-                <h3>PhD Research Assistant</h3>
-                <p>Santa Clara University, School of Engineering</p>
-                <ul>
-                  <li>Developed a distributed network protection framework in Python</li>
-                  <li>Built a distributed computation framework using NetworkX and Scipy</li>
-                  <li>Optimized data processing achieving 70% improvement in speed</li>
-                  <li>Built custom monitoring tools using asyncio and aiohttp</li>
-                </ul>
-                <div className="company-logo">
-                  <img src="/santa-clara-university-logo.png" alt="Santa Clara University logo" />
-                </div>
-              </div>
-            </div>
-            <div className="timeline-item">
-              <div className="timeline-date">2022 - 2023</div>
-              <div className="timeline-content">
-                <h3>Full Stack Engineer</h3>
-                <p>Kellynkai, San Francisco</p>
-                <ul>
-                  <li>Developed real-time interaction system using TypeScript and React</li>
-                  <li>Implemented efficient GraphQL API with schema optimization</li>
-                  <li>Leveraged WebSocket for real-time synchronization</li>
-                  <li>Collaborated with product manager and cross-functional teams</li>
-                </ul>
-                <div className="company-logo">
-                  <img src="/kellynkai_logo.png" alt="Kellynkai logo" />
-                </div>
-              </div>
-            </div>
-            <div className="timeline-item">
-              <div className="timeline-date">2020 - 2021</div>
-              <div className="timeline-content">
-                <h3>Software Engineer</h3>
-                <p>Huawei, Shenzhen</p>
-                <ul>
-                  <li>Developed system integration for microservices-based platform</li>
-                  <li>Led service optimizations achieving 30% latency improvement</li>
-                  <li>Engineered high-performance ETL pipelines</li>
-                  <li>Implemented real-time data streaming with WebSocket</li>
-                </ul>
-                <div className="company-logo">
-                  <img src="/Huawei_logo.png" alt="Huawei logo" />
-                </div>
-              </div>
-            </div>
-            <div className="timeline-item">
-              <div className="timeline-date">2019 - 2020</div>
-              <div className="timeline-content">
-                <h3>Software Engineer</h3>
-                <p>Tencent, Shenzhen</p>
-                <ul>
-                  <li>Collaborated in developing file management module</li>
-                  <li>Implemented robust file upload system reducing upload time by 80%</li>
-                  <li>Optimized database access patterns using Redis caching</li>
-                  <li>Designed and maintained CI/CD pipelines</li>
-                </ul>
-                <div className="company-logo">
-                  <img src="/tencent_logo.png" alt="Tencent logo" />
-                </div>
-              </div>
             </div>
           </div>
         </motion.div>
